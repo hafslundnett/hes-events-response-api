@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="IECEventSubscription" targetNamespace="http://aidon.com/IEC/Event/v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://aidon.com/IEC/Event/v2" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage">
+      <xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+      <xs:import namespace="http://iec.ch/TC57/2007/EventSubscription#"/>
+      <xs:element name="CreateEventSubscriptionRequest" type="tns:CreateEventSubscriptionRequestMessageType"/>
+      <xs:complexType name="CreateEventSubscriptionRequestMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:RequestMessageTypePayloadBase">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:CreateEventSubscriptionPayloadType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RequestMessageTypePayloadBase" abstract="true">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:RequestMessageTypeBase"/>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RequestMessageTypeBase" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateEventSubscriptionPayloadType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:PayloadTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="EventSubscription" nillable="true" type="q2:EventSubscription" xmlns:q2="http://iec.ch/TC57/2007/EventSubscription#"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="PayloadTypeBase" abstract="true"/>
+      <xs:element name="CreateEventSubscriptionResponse" type="tns:CreateEventSubscriptionResponseMessageType"/>
+      <xs:complexType name="CreateEventSubscriptionResponseMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessageTypeBase"/>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ResponseMessageTypeBase" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DeleteEventSubscriptionRequest" type="tns:DeleteEventSubscriptionRequestMessageType"/>
+      <xs:complexType name="DeleteEventSubscriptionRequestMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:RequestMessageTypePayloadBase">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:DeleteEventSubscriptionPayloadType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="DeleteEventSubscriptionPayloadType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:PayloadTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="EventSubscription" nillable="true" type="q5:EventSubscription" xmlns:q5="http://iec.ch/TC57/2007/EventSubscription#"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="DeleteEventSubscriptionResponse" type="tns:DeleteEventSubscriptionResponseMessageType"/>
+      <xs:complexType name="DeleteEventSubscriptionResponseMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessageTypeBase"/>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="GetEventSubscriptionRequest" type="tns:GetEventSubscriptionRequestMessageType"/>
+      <xs:complexType name="GetEventSubscriptionRequestMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:RequestMessageTypeSimpleBase"/>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RequestMessageTypeSimpleBase" abstract="true">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:RequestMessageTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Request" type="q6:RequestTypeSimple" xmlns:q6="http://iec.ch/TC57/2011/schema/message"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="GetEventSubscriptionResponse" type="tns:GetEventSubscriptionResponseMessageType"/>
+      <xs:complexType name="GetEventSubscriptionResponseMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessageTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:EventSubscriptionPayloadType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EventSubscriptionPayloadType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:PayloadTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" ref="q7:EventSubscriptions" xmlns:q7="http://iec.ch/TC57/2007/EventSubscription#"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2011/schema/message" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2011/schema/message">
+      <xs:complexType name="HeaderType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Verb">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="cancel"/>
+                <xs:enumeration value="canceled"/>
+                <xs:enumeration value="change"/>
+                <xs:enumeration value="changed"/>
+                <xs:enumeration value="create"/>
+                <xs:enumeration value="created"/>
+                <xs:enumeration value="close"/>
+                <xs:enumeration value="closed"/>
+                <xs:enumeration value="delete"/>
+                <xs:enumeration value="deleted"/>
+                <xs:enumeration value="get"/>
+                <xs:enumeration value="reply"/>
+                <xs:enumeration value="execute"/>
+                <xs:enumeration value="executed"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="Noun" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Timestamp" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Source" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="MessageID" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="CorrelationID" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="AccessToken" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="OrganisationID" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="UseGuaranteedDelivery" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReplyType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Result">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="OK"/>
+                <xs:enumeration value="PARTIAL"/>
+                <xs:enumeration value="FAILED"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:ErrorType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="code" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="level">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="INFORM"/>
+                <xs:enumeration value="WARNING"/>
+                <xs:enumeration value="FATAL"/>
+                <xs:enumeration value="CATASTROPHIC"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="reason" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="details" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="stackTrace" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ID">
+            <xs:complexType>
+              <xs:simpleContent>
+                <xs:extension base="xs:string">
+                  <xs:attribute name="objectType" type="xs:string"/>
+                </xs:extension>
+              </xs:simpleContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RequestTypeSimple">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="ID" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EventSubscription#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EventSubscription#">
+      <xs:import namespace="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+      <xs:import namespace="http://iec.ch/TC57/2007/ConfigurationEvent#"/>
+      <xs:complexType name="EventSubscription">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="endpointAddress" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="useGuaranteedDelivery" type="xs:boolean"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="EndDeviceEvents" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceEvent" nillable="true" type="q1:EndDeviceEvent" xmlns:q1="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="ConfigurationEvents" nillable="true">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="ConfigurationEvent" nillable="true" type="q2:ConfigurationEvent" xmlns:q2="http://iec.ch/TC57/2007/ConfigurationEvent#"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EventSubscriptions" nillable="true" type="tns:ArrayOfEventSubscription"/>
+      <xs:complexType name="ArrayOfEventSubscription">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EventSubscription" nillable="true" type="tns:EventSubscription"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EndDeviceEvent#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EndDeviceEvent#">
+      <xs:complexType name="EndDeviceEvent">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ruleType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="EndDeviceEventType" nillable="true" type="tns:EndDeviceEventType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EndDeviceEventType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="type" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="domain" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="subdomain" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="eventOrAction" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/ConfigurationEvent#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/ConfigurationEvent#">
+      <xs:complexType name="ConfigurationEvent">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ruleType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Noun" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Verb" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateEventSubscriptionRequest">
+    <wsdl:part name="CreateEventSubscriptionRequest" element="q1:CreateEventSubscriptionRequest" xmlns:q1="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage"/>
+  </wsdl:message>
+  <wsdl:message name="CreateEventSubscriptionResponse">
+    <wsdl:part name="CreateEventSubscriptionResponse" element="q2:CreateEventSubscriptionResponse" xmlns:q2="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteEventSubscriptionRequest">
+    <wsdl:part name="DeleteEventSubscriptionRequest" element="q3:DeleteEventSubscriptionRequest" xmlns:q3="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteEventSubscriptionResponse">
+    <wsdl:part name="DeleteEventSubscriptionResponse" element="q4:DeleteEventSubscriptionResponse" xmlns:q4="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage"/>
+  </wsdl:message>
+  <wsdl:message name="GetEventSubscriptionRequest">
+    <wsdl:part name="GetEventSubscriptionRequest" element="q5:GetEventSubscriptionRequest" xmlns:q5="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage"/>
+  </wsdl:message>
+  <wsdl:message name="GetEventSubscriptionResponse">
+    <wsdl:part name="GetEventSubscriptionResponse" element="q6:GetEventSubscriptionResponse" xmlns:q6="http://aidon.com/IEC/Event/v2/EventSubscriptionMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="IIECEventSubscription">
+    <wsdl:operation name="CreateEventSubscription">
+      <wsdl:input wsaw:Action="http://aidon.com/IEC/Event/v2/IECEvent/CreateEventSubscriptionRequest" name="CreateEventSubscriptionRequest" message="tns:CreateEventSubscriptionRequest"/>
+      <wsdl:output wsaw:Action="http://aidon.com/IEC/Event/v2/IECEvent/CreateEventSubscriptionResponse" name="CreateEventSubscriptionResponse" message="tns:CreateEventSubscriptionResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEventSubscription">
+      <wsdl:input wsaw:Action="http://aidon.com/IEC/Event/v2/IECEvent/DeleteEventSubscriptionRequest" name="DeleteEventSubscriptionRequest" message="tns:DeleteEventSubscriptionRequest"/>
+      <wsdl:output wsaw:Action="http://aidon.com/IEC/Event/v2/IECEvent/DeleteEventSubscriptionResponse" name="DeleteEventSubscriptionResponse" message="tns:DeleteEventSubscriptionResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventSubscription">
+      <wsdl:input wsaw:Action="http://aidon.com/IEC/Event/v2/IECEvent/GetEventSubscriptionRequest" name="GetEventSubscriptionRequest" message="tns:GetEventSubscriptionRequest"/>
+      <wsdl:output wsaw:Action="http://aidon.com/IEC/Event/v2/IECEvent/GetEventSubscriptionResponse" name="GetEventSubscriptionResponse" message="tns:GetEventSubscriptionResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IECEventSubscription" type="tns:IIECEventSubscription">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CreateEventSubscription">
+      <soap:operation soapAction="http://aidon.com/IEC/Event/v2/IECEvent/CreateEventSubscriptionRequest" style="document"/>
+      <wsdl:input name="CreateEventSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CreateEventSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEventSubscription">
+      <soap:operation soapAction="http://aidon.com/IEC/Event/v2/IECEvent/DeleteEventSubscriptionRequest" style="document"/>
+      <wsdl:input name="DeleteEventSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DeleteEventSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventSubscription">
+      <soap:operation soapAction="http://aidon.com/IEC/Event/v2/IECEvent/GetEventSubscriptionRequest" style="document"/>
+      <wsdl:input name="GetEventSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetEventSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IECEventSubscription">
+    <wsdl:port name="IECEventSubscription" binding="tns:IECEventSubscription">
+      <soap:address location="http://localhost:45677/IECEventSubscription.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

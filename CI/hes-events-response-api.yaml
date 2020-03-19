@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hes-events-response-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+   matchLabels:
+     app: hes-events-response-api
+     microservice-type: webapi
+  template:
+    metadata:
+      labels:
+        app: hes-events-response-api
+        microservice-type: webapi
+    spec:
+      serviceAccountName: hes-events-response-api
+      imagePullSecrets:
+      - name: containerregistryprodsecret
+      containers:
+        - name: hes-events-response-api
+          image: containerregistryprod.azurecr.io/hes-events-response-api:imagetag
+          imagePullPolicy: Always
+          resources:
+              requests:
+                cpu: 100m
+                memory: 125Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+        env:
+          - name: EventHub__eventHubName
+            value: alarmsandevents
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hes-events-response-api
+spec:
+  selector:
+    app: hes-events-response-api
+  ports:
+  - name: hes-events-response-api
+    port: 80
+    

@@ -1,0 +1,1896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="IECManagement" targetNamespace="http://aidon.com/IEC/Management/v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://aidon.com/IEC/Management/v2" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/UsagePointMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/UsagePointMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/UsagePoint#"/>
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:element name="ChangeUsagePointRequest" type="tns:ChangeUsagePointRequestMessageType"/>
+			<xs:complexType name="ChangeUsagePointRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:ChangeUsagePointPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypePayloadBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ChangeUsagePointPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q2:UsagePointChange" xmlns:q2="http://iec.ch/TC57/2007/UsagePoint#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="ChangeUsagePointResponse" type="tns:ChangeUsagePointResponseMessageType"/>
+			<xs:complexType name="ChangeUsagePointResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointRequest" type="tns:CreateUsagePointRequestMessageType"/>
+			<xs:complexType name="CreateUsagePointRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:CreateUsagePointPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateUsagePointPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q5:UsagePointCreate" xmlns:q5="http://iec.ch/TC57/2007/UsagePoint#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointResponse" type="tns:CreateUsagePointResponseMessageType"/>
+			<xs:complexType name="CreateUsagePointResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="GetUsagePointRequest" type="tns:GetUsagePointRequestMessageType"/>
+			<xs:complexType name="GetUsagePointRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q6:RequestTypeMultiple" xmlns:q6="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="GetUsagePointResponse" type="tns:GetUsagePointResponseMessageType"/>
+			<xs:complexType name="GetUsagePointResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:UsagePointsPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointsPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q7:UsagePoints" xmlns:q7="http://iec.ch/TC57/2007/UsagePoint#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointRequest" type="tns:DeleteUsagePointRequestMessageType"/>
+			<xs:complexType name="DeleteUsagePointRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeSingleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeSingleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q8:RequestTypeSingle" xmlns:q8="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointResponse" type="tns:DeleteUsagePointResponseMessageType"/>
+			<xs:complexType name="DeleteUsagePointResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="SearchUsagePointRequest" type="tns:SearchUsagePointRequestMessageType"/>
+			<xs:complexType name="SearchUsagePointRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="SearchUsagePointResponse" type="tns:SearchUsagePointResponseMessageType"/>
+			<xs:complexType name="SearchUsagePointResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:UsagePointListPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointListPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="UsagePoints" type="q9:ArrayOfString" xmlns:q9="http://aidon.com/IEC/Management/v2/Common"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2011/schema/message" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2011/schema/message">
+			<xs:complexType name="HeaderType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Verb">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="cancel"/>
+								<xs:enumeration value="canceled"/>
+								<xs:enumeration value="change"/>
+								<xs:enumeration value="changed"/>
+								<xs:enumeration value="create"/>
+								<xs:enumeration value="created"/>
+								<xs:enumeration value="close"/>
+								<xs:enumeration value="closed"/>
+								<xs:enumeration value="delete"/>
+								<xs:enumeration value="deleted"/>
+								<xs:enumeration value="get"/>
+								<xs:enumeration value="reply"/>
+								<xs:enumeration value="execute"/>
+								<xs:enumeration value="executed"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="Noun" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Timestamp" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Source" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="MessageID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="CorrelationID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="AccessToken" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="OrganisationID" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UseGuaranteedDelivery" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReplyType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Result">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="OK"/>
+								<xs:enumeration value="PARTIAL"/>
+								<xs:enumeration value="FAILED"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:ErrorType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="code" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="level">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="INFORM"/>
+								<xs:enumeration value="WARNING"/>
+								<xs:enumeration value="FATAL"/>
+								<xs:enumeration value="CATASTROPHIC"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1" name="reason" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="details" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="stackTrace" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ID">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RequestTypeMultiple">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="ID">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RequestTypeSingle">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="ID" nillable="true">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RequestTypeSingleWithTimeRange">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndTime" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ID" nillable="true">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RequestTypeSingleWithOptionalTimeRangeWithDefaultUtcNowEndTimeOnNullValue">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="StartTime" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndTime" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ID" nillable="true">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/UsagePoint#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/UsagePoint#">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDevice#"/>
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Network"/>
+			<xs:complexType name="UsagePointChange">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ratedCurrent" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="phaseCode" type="tns:PhaseCode"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePointLocation" type="tns:UsagePointLocation"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PhaseCode">
+				<xs:attribute name="ref" type="xs:string"/>
+			</xs:complexType>
+			<xs:complexType name="UsagePointLocation">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="mainAddress" type="tns:StreetAddress"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="PositionPoint" nillable="true" type="tns:PositionPoint"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="StreetAddress">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="streetDetail" type="tns:StreetDetail"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="townDetail" type="tns:TownDetail"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="StreetDetail">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="number" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="suiteNumber" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TownDetail">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="code" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="country" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="stateOrProvince" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PositionPoint">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="xPosition" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="yPosition" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointCreate">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" ref="q1:usagePointType" xmlns:q1="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ratedCurrent" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q2:networkID" xmlns:q2="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="phaseCode" type="tns:PhaseCode"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePointLocation" type="tns:UsagePointLocation"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ServiceCategory" nillable="true" type="tns:UsagePointServiceCategory"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointServiceCategory">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="kind" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="UsagePoints" type="tns:ArrayOfUsagePoint"/>
+			<xs:complexType name="ArrayOfUsagePoint">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="UsagePoint" type="tns:UsagePoint"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePoint">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" ref="q3:usagePointType" xmlns:q3="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ratedCurrent" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q4:networkID" xmlns:q4="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q5:phaseCurrentLimit" xmlns:q5="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q6:totalPowerLimit" xmlns:q6="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q7:installationStatus" xmlns:q7="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q8:phaseCode" xmlns:q8="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePointLocation" type="tns:UsagePointLocation"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ServiceCategory" nillable="true" type="tns:UsagePointServiceCategory"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDevices" type="tns:ArrayOfEndDeviceId"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePointGroups" type="tns:ArrayOfUsagePointGroupId"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q9:Contract" xmlns:q9="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q10:Configuration" xmlns:q10="http://aidon.com/IEC/Management/v2/UsagePoint"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceFunctions" type="tns:ArrayOfEndDeviceFunctionRelay"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfEndDeviceId">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDevice" type="tns:EndDeviceId"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceId">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="mRID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfUsagePointGroupId">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="UsagePointGroup" type="tns:UsagePointGroupId"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroupId">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="mRID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfEndDeviceFunctionRelay">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceFunction" type="q11:EndDeviceFunctionRelay" xmlns:q11="http://iec.ch/TC57/2007/EndDevice#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Networks" type="tns:ArrayOfNetwork"/>
+			<xs:complexType name="ArrayOfNetwork">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Network" type="q12:Network" xmlns:q12="http://aidon.com/IEC/Management/v2/Network"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/UsagePoint" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/UsagePoint">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:element name="usagePointType" nillable="true" type="xs:string"/>
+			<xs:element name="networkID" nillable="true" type="xs:string"/>
+			<xs:element name="phaseCurrentLimit" nillable="true" type="xs:int"/>
+			<xs:element name="totalPowerLimit" nillable="true" type="xs:int"/>
+			<xs:element name="installationStatus" type="xs:string"/>
+			<xs:element name="phaseCode" type="tns:PhaseCode"/>
+			<xs:complexType name="PhaseCode">
+				<xs:attribute name="ref" type="xs:string"/>
+			</xs:complexType>
+			<xs:element name="Contract" type="q1:identifiedObject" xmlns:q1="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:element name="Configuration" type="q2:identifiedObject" xmlns:q2="http://aidon.com/IEC/Management/v2/Common"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/Common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/Common">
+			<xs:complexType name="identifiedObject">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfString">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="mRID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EndDevice#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EndDevice#">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/EndDevice"/>
+			<xs:complexType name="EndDeviceFunctionRelay">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceFunctionKind" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="EndDevices" type="tns:ArrayOfEndDevice"/>
+			<xs:complexType name="ArrayOfEndDevice">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDevice" type="tns:EndDevice"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDevice">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q1:networkID" xmlns:q1="http://aidon.com/IEC/Management/v2/EndDevice"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="Modules" type="tns:ArrayOfModule"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterInfos" type="tns:ArrayOfMeterInfo"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="SimInfos" type="tns:ArrayOfSimInfo"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="Assets" type="tns:ArrayOfAsset"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="AuxiliaryMeters" type="tns:ArrayOfAuxiliaryMeter"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceBase">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfModule">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Module" type="tns:Module"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Module">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ModuleBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="type" nillable="true" type="xs:string"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="role" nillable="true" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="softwareVersion" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceFunctions" type="tns:ArrayOfEndDeviceFunction"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ModuleBase">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfEndDeviceFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceFunction" type="tns:EndDeviceFunction"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="amrAddress" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="enabled" type="xs:boolean"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q2:type" xmlns:q2="http://aidon.com/IEC/Management/v2/EndDevice"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q3:order" xmlns:q3="http://aidon.com/IEC/Management/v2/EndDevice"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfMeterInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="MeterInfo" type="tns:MeterInfo"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MeterInfo">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:MeterInfoBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="ServiceCategory" nillable="true" type="tns:EndDeviceServiceCategory"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="ownerId" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="softwareVersion" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceFunctions" type="tns:ArrayOfEndDeviceFunction"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="MeterInfoBase">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceServiceCategory">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="kind" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfSimInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="SimInfo" type="tns:SimInfo"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SimInfo">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:SimInfoBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="imsi" nillable="true" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceFunctions" type="tns:ArrayOfEndDeviceFunction"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SimInfoBase">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfAsset">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Asset" type="tns:Asset"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Asset">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="type" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="model" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ActivityRecords" type="tns:ArrayOfActivityRecord"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfActivityRecord">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="ActivityRecord" type="tns:ActivityRecord"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ActivityRecord">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="type" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="createdDateTime" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfAuxiliaryMeter">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="AuxiliaryMeter" type="tns:AuxiliaryMeter"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AuxiliaryMeter">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="softwareVersion" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/ChangeHistoryMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/ChangeHistoryMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/ChangeHistory"/>
+			<xs:element name="GetUsagePointChangeHistoryRequest" type="tns:GetUsagePointChangeHistoryRequestMessageType"/>
+			<xs:complexType name="GetUsagePointChangeHistoryRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeSingleBaseWithTimeRange"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeSingleBaseWithTimeRange" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeSingleWithTimeRange" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetUsagePointChangeHistoryResponse" type="tns:GetUsagePointChangeHistoryResponseMessageType"/>
+			<xs:complexType name="GetUsagePointChangeHistoryResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ChangeHistoryPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ChangeHistoryPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="ChangeHistoryEntries" type="q5:ArrayOfChangeHistoryEntry" xmlns:q5="http://aidon.com/IEC/Management/v2/ChangeHistory"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="GetUsagePointGroupChangeHistoryRequest" type="tns:GetUsagePointGroupChangeHistoryRequestMessageType"/>
+			<xs:complexType name="GetUsagePointGroupChangeHistoryRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeSingleBaseWithTimeRange"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="GetUsagePointGroupChangeHistoryResponse" type="tns:GetUsagePointGroupChangeHistoryResponseMessageType"/>
+			<xs:complexType name="GetUsagePointGroupChangeHistoryResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ChangeHistoryPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/ChangeHistory" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/ChangeHistory">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:complexType name="ArrayOfChangeHistoryEntry">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="changeHistoryEntry" type="tns:changeHistoryEntry"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="changeHistoryEntry">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="effectiveDateTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="modifiedBy" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="changedEntity" type="q1:identifiedObject" xmlns:q1="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="relatedEntity" type="q2:identifiedObject" xmlns:q2="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+			<xs:element name="CreateUsagePointEndDeviceLinkRequest" type="tns:CreateUsagePointEndDeviceLinkRequestMessageType"/>
+			<xs:complexType name="CreateUsagePointEndDeviceLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:UsagePointEndDeviceLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypePayloadBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointEndDeviceLinkPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="MasterDataLinkageConfig" nillable="true" type="q2:MasterDataLinkageConfigUsagePointEndDevice" xmlns:q2="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="CreateUsagePointEndDeviceLinkResponse" type="tns:MasterDataLinkageConfigResponseMessageType"/>
+			<xs:complexType name="MasterDataLinkageConfigResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointEndDeviceLinkRequest" type="tns:DeleteUsagePointEndDeviceLinkRequestMessageType"/>
+			<xs:complexType name="DeleteUsagePointEndDeviceLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:UsagePointEndDeviceLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointEndDeviceLinkResponse" type="tns:MasterDataLinkageConfigResponseMessageType"/>
+			<xs:element name="CreateUsagePointContractLinkRequest" type="tns:CreateUsagePointContractLinkRequestMessageType"/>
+			<xs:complexType name="CreateUsagePointContractLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:UsagePointContractLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointContractLinkPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="MasterDataLinkageConfig" nillable="true" type="q5:MasterDataLinkageConfigUsagePointContract" xmlns:q5="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointContractLinkResponse" type="tns:MasterDataLinkageConfigResponseMessageType"/>
+			<xs:element name="CreateUsagePointGroupLinkRequest" type="tns:CreateUsagePointGroupLinkRequestMessageType"/>
+			<xs:complexType name="CreateUsagePointGroupLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:UsagePointGroupLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroupLinkPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="MasterDataLinkageConfig" nillable="true" type="q6:MasterDataLinkageConfigUsagePointGroup" xmlns:q6="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointGroupLinkResponse" type="tns:MasterDataLinkageConfigResponseMessageType"/>
+			<xs:element name="DeleteUsagePointGroupLinkRequest" type="tns:DeleteUsagePointGroupLinkRequestMessageType"/>
+			<xs:complexType name="DeleteUsagePointGroupLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:UsagePointGroupLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointGroupLinkResponse" type="tns:MasterDataLinkageConfigResponseMessageType"/>
+			<xs:element name="GetUsagePointEndDeviceLinkRequest" type="tns:GetUsagePointEndDeviceLinkRequestMessageType"/>
+			<xs:complexType name="GetUsagePointEndDeviceLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeSingleBaseWithOptionalTimeRange"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeSingleBaseWithOptionalTimeRange" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q7:RequestTypeSingleWithOptionalTimeRangeWithDefaultUtcNowEndTimeOnNullValue" xmlns:q7="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="GetUsagePointEndDeviceLinkResponse" type="tns:GetUsagePointEndDeviceLinkResponseMessageType"/>
+			<xs:complexType name="GetUsagePointEndDeviceLinkResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:UsagePointEndDeviceLinkPayload"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointEndDeviceLinkPayload">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MasterDataLinkageConfigs" type="tns:ArrayOfMasterDataLinkageConfigUsagePointEndDeviceHistory"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfMasterDataLinkageConfigUsagePointEndDeviceHistory">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="MasterDataLinkageConfig" type="q8:MasterDataLinkageConfigUsagePointEndDeviceHistory" xmlns:q8="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointConfigurationLinkRequest" type="tns:CreateUsagePointConfigurationLinkRequestMessageType"/>
+			<xs:complexType name="CreateUsagePointConfigurationLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:UsagePointConfigurationLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointConfigurationLinkPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="MasterDataLinkageConfig" nillable="true" type="q9:MasterDataLinkageConfigUsagePointConfiguration" xmlns:q9="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointConfigurationLinkResponse" type="tns:MasterDataLinkageConfigResponseMessageType"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/MasterDataLinkageConfig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/MasterDataLinkageConfig#">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDevice#"/>
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/EffectivePeriod"/>
+			<xs:complexType name="MasterDataLinkageConfigUsagePointEndDevice">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="effectiveDateTime" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q1:identifiedObject" xmlns:q1="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q2:identifiedObject" xmlns:q2="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MasterDataLinkageConfigUsagePointContract">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q3:identifiedObject" xmlns:q3="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Contract" nillable="true" type="q4:identifiedObject" xmlns:q4="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="isEndDevicePreconfigured" nillable="true" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MasterDataLinkageConfigUsagePointGroup">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" nillable="true" type="q5:identifiedObject" xmlns:q5="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoints" nillable="true" type="tns:UsagePointGroupUsagePoints"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePointGroup" nillable="true" type="q6:identifiedObject" xmlns:q6="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroupUsagePoints">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="UsagePoint" type="q7:identifiedObject" xmlns:q7="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MasterDataLinkageConfigEndDeviceComponentLink">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q8:EndDeviceBase" xmlns:q8="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Module" type="q9:ModuleBase" xmlns:q9="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="MeterInfo" type="q10:MeterInfoBase" xmlns:q10="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="SimInfo" type="q11:SimInfoBase" xmlns:q11="http://iec.ch/TC57/2007/EndDevice#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MasterDataLinkageConfigUsagePointEndDeviceHistory">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="effectivePeriod" type="q12:effectivePeriod" xmlns:q12="http://aidon.com/IEC/Management/v2/EffectivePeriod"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" type="q13:identifiedObject" xmlns:q13="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDevice" type="q14:identifiedObject" xmlns:q14="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MasterDataLinkageConfigUsagePointConfiguration">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q15:identifiedObject" xmlns:q15="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Configuration" nillable="true" type="q16:identifiedObject" xmlns:q16="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/EndDeviceMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/EndDeviceMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDevice#"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+			<xs:element name="GetEndDeviceRequest" type="tns:GetEndDeviceRequestMessageType"/>
+			<xs:complexType name="GetEndDeviceRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeMultiple" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetEndDeviceResponse" type="tns:GetEndDeviceResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EndDevicePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDevicePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q5:EndDevices" xmlns:q5="http://iec.ch/TC57/2007/EndDevice#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="DeleteEndDeviceRequest" type="tns:DeleteEndDeviceRequestMessageType"/>
+			<xs:complexType name="DeleteEndDeviceRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeSingleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeSingleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q6:RequestTypeSingle" xmlns:q6="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteEndDeviceResponse" type="tns:DeleteEndDeviceResponseMessageType"/>
+			<xs:complexType name="DeleteEndDeviceResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateEndDeviceComponentLinkRequest" type="tns:CreateEndDeviceComponentLinkRequestMessageType"/>
+			<xs:complexType name="CreateEndDeviceComponentLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:EndDeviceComponentLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypePayloadBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceComponentLinkPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="MasterDataLinkageConfig" nillable="true" type="q7:MasterDataLinkageConfigEndDeviceComponentLink" xmlns:q7="http://iec.ch/TC57/2007/MasterDataLinkageConfig#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateEndDeviceComponentLinkResponse" type="tns:CreateEndDeviceComponentLinkResponseMessageType"/>
+			<xs:complexType name="CreateEndDeviceComponentLinkResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteEndDeviceComponentLinkRequest" type="tns:DeleteEndDeviceComponentLinkRequestMessageType"/>
+			<xs:complexType name="DeleteEndDeviceComponentLinkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:EndDeviceComponentLinkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteEndDeviceComponentLinkResponse" type="tns:DeleteEndDeviceComponentLinkResponseMessageType"/>
+			<xs:complexType name="DeleteEndDeviceComponentLinkResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/EndDevice" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/EndDevice">
+			<xs:element name="networkID" type="xs:string"/>
+			<xs:element name="type" type="xs:string"/>
+			<xs:element name="order" type="xs:integer"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/ProductMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/ProductMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Product"/>
+			<xs:element name="GetProductRequest" type="tns:GetProductRequestMessageType"/>
+			<xs:complexType name="GetProductRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeMultiple" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetProductResponse" type="tns:GetProductResponseMessageType"/>
+			<xs:complexType name="GetProductResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ProductPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q5:Products" xmlns:q5="http://aidon.com/IEC/Management/v2/Product"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/Product" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/Product">
+			<xs:element name="Products" type="tns:ArrayOfProduct"/>
+			<xs:complexType name="ArrayOfProduct">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Product" type="tns:Product"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Product">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="productProfile" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="productSpecification" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/ContractMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/ContractMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/CustomerAgreement#"/>
+			<xs:element name="GetContractRequest" type="tns:GetContractRequestMessageType"/>
+			<xs:complexType name="GetContractRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeMultiple" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetContractResponse" type="tns:GetContractResponseMessageType"/>
+			<xs:complexType name="GetContractResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ContractPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ContractPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Contracts" type="tns:ArrayOfCustomerAgreement"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:complexType name="ArrayOfCustomerAgreement">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Contract" type="q5:CustomerAgreement" xmlns:q5="http://iec.ch/TC57/2007/CustomerAgreement#"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/CustomerAgreement#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/CustomerAgreement#">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/CustomerAgreement"/>
+			<xs:complexType name="CustomerAgreement">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="type" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="q1:Products" xmlns:q1="http://aidon.com/IEC/Management/v2/CustomerAgreement"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/CustomerAgreement" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/CustomerAgreement">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:element name="Products" type="q1:ArrayOfString" xmlns:q1="http://aidon.com/IEC/Management/v2/Common"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/ConfigurationMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/ConfigurationMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/CustomerAgreement#"/>
+			<xs:element name="GetConfigurationRequest" type="tns:GetConfigurationRequestMessageType"/>
+			<xs:complexType name="GetConfigurationRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeMultiple" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetConfigurationResponse" type="tns:GetConfigurationResponseMessageType"/>
+			<xs:complexType name="GetConfigurationResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ConfigurationPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ConfigurationPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Configurations" type="tns:ArrayOfCustomerAgreement"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:complexType name="ArrayOfCustomerAgreement">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Configuration" type="q5:CustomerAgreement" xmlns:q5="http://iec.ch/TC57/2007/CustomerAgreement#"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/UsagePointGroup#"/>
+			<xs:element name="GetUsagePointGroupRequest" type="tns:GetUsagePointGroupRequestMessageType"/>
+			<xs:complexType name="GetUsagePointGroupRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeMultiple" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetUsagePointGroupResponse" type="tns:GetUsagePointGroupResponseResponseMessageType"/>
+			<xs:complexType name="GetUsagePointGroupResponseResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:UsagePointGroupsPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroupsPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q5:UsagePointGroups" xmlns:q5="http://iec.ch/TC57/2007/UsagePointGroup#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="CreateUsagePointGroupRequest" type="tns:CreateUsagePointGroupRequestMessageType"/>
+			<xs:complexType name="CreateUsagePointGroupRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypePayloadBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Payload" nillable="true" type="tns:CreateUsagePointGroupPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypePayloadBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CreateUsagePointGroupPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="UsagePointGroup" nillable="true" type="q6:UsagePointGroupCreate" xmlns:q6="http://iec.ch/TC57/2007/UsagePointGroup#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CreateUsagePointGroupResponse" type="tns:CreateUsagePointGroupResponseMessageType"/>
+			<xs:complexType name="CreateUsagePointGroupResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:UsagePointGroupPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroupPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="UsagePointGroup" type="q7:UsagePointGroup" xmlns:q7="http://iec.ch/TC57/2007/UsagePointGroup#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointGroupRequest" type="tns:DeleteUsagePointGroupRequestMessageType"/>
+			<xs:complexType name="DeleteUsagePointGroupRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeSingleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeSingleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q8:RequestTypeSingle" xmlns:q8="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="DeleteUsagePointGroupResponse" type="tns:DeleteUsagePointGroupResponseMessageType"/>
+			<xs:complexType name="DeleteUsagePointGroupResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/UsagePointGroup#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/UsagePointGroup#">
+			<xs:element name="UsagePointGroups" type="tns:ArrayOfUsagePointGroup"/>
+			<xs:complexType name="ArrayOfUsagePointGroup">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="UsagePointGroup" type="tns:UsagePointGroup"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroup">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="createdBy" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="createdDateTime" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePointGroupCreate">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/NetworkMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/NetworkMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/UsagePoint#"/>
+			<xs:element name="GetNetworkRequest" type="tns:GetNetworkRequestMessageType"/>
+			<xs:complexType name="GetNetworkRequestMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeMultipleBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeMultipleBase" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:RequestMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Request" type="q1:RequestTypeMultiple" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RequestMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetNetworkResponse" type="tns:GetNetworkResponseMessageType"/>
+			<xs:complexType name="GetNetworkResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:NetworkPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NetworkPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q5:Networks" xmlns:q5="http://iec.ch/TC57/2007/UsagePoint#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/Network" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/Network">
+			<xs:complexType name="Network">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="mRID" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="timezone" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/EffectivePeriod" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/EffectivePeriod">
+			<xs:complexType name="effectivePeriod">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="start" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="end" nillable="true" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ChangeUsagePointRequest">
+		<wsdl:part name="ChangeUsagePointRequest" element="q1:ChangeUsagePointRequest" xmlns:q1="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ChangeUsagePointResponse">
+		<wsdl:part name="ChangeUsagePointResponse" element="q2:ChangeUsagePointResponse" xmlns:q2="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointRequest">
+		<wsdl:part name="CreateUsagePointRequest" element="q3:CreateUsagePointRequest" xmlns:q3="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointResponse">
+		<wsdl:part name="CreateUsagePointResponse" element="q4:CreateUsagePointResponse" xmlns:q4="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointRequest">
+		<wsdl:part name="GetUsagePointRequest" element="q5:GetUsagePointRequest" xmlns:q5="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointResponse">
+		<wsdl:part name="GetUsagePointResponse" element="q6:GetUsagePointResponse" xmlns:q6="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointRequest">
+		<wsdl:part name="DeleteUsagePointRequest" element="q7:DeleteUsagePointRequest" xmlns:q7="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointResponse">
+		<wsdl:part name="DeleteUsagePointResponse" element="q8:DeleteUsagePointResponse" xmlns:q8="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SearchUsagePointRequest">
+		<wsdl:part name="SearchUsagePointRequest" element="q9:SearchUsagePointRequest" xmlns:q9="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SearchUsagePointResponse">
+		<wsdl:part name="SearchUsagePointResponse" element="q10:SearchUsagePointResponse" xmlns:q10="http://aidon.com/IEC/Management/v2/UsagePointMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointChangeHistoryRequest">
+		<wsdl:part name="GetUsagePointChangeHistoryRequest" element="q11:GetUsagePointChangeHistoryRequest" xmlns:q11="http://aidon.com/IEC/Management/v2/ChangeHistoryMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointChangeHistoryResponse">
+		<wsdl:part name="GetUsagePointChangeHistoryResponse" element="q12:GetUsagePointChangeHistoryResponse" xmlns:q12="http://aidon.com/IEC/Management/v2/ChangeHistoryMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointGroupChangeHistoryRequest">
+		<wsdl:part name="GetUsagePointGroupChangeHistoryRequest" element="q13:GetUsagePointGroupChangeHistoryRequest" xmlns:q13="http://aidon.com/IEC/Management/v2/ChangeHistoryMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointGroupChangeHistoryResponse">
+		<wsdl:part name="GetUsagePointGroupChangeHistoryResponse" element="q14:GetUsagePointGroupChangeHistoryResponse" xmlns:q14="http://aidon.com/IEC/Management/v2/ChangeHistoryMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointEndDeviceLinkRequest">
+		<wsdl:part name="CreateUsagePointEndDeviceLinkRequest" element="q15:CreateUsagePointEndDeviceLinkRequest" xmlns:q15="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointEndDeviceLinkResponse">
+		<wsdl:part name="CreateUsagePointEndDeviceLinkResponse" element="q16:CreateUsagePointEndDeviceLinkResponse" xmlns:q16="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointEndDeviceLinkRequest">
+		<wsdl:part name="DeleteUsagePointEndDeviceLinkRequest" element="q17:DeleteUsagePointEndDeviceLinkRequest" xmlns:q17="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointEndDeviceLinkResponse">
+		<wsdl:part name="DeleteUsagePointEndDeviceLinkResponse" element="q18:DeleteUsagePointEndDeviceLinkResponse" xmlns:q18="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointContractLinkRequest">
+		<wsdl:part name="CreateUsagePointContractLinkRequest" element="q19:CreateUsagePointContractLinkRequest" xmlns:q19="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointContractLinkResponse">
+		<wsdl:part name="CreateUsagePointContractLinkResponse" element="q20:CreateUsagePointContractLinkResponse" xmlns:q20="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointGroupLinkRequest">
+		<wsdl:part name="CreateUsagePointGroupLinkRequest" element="q21:CreateUsagePointGroupLinkRequest" xmlns:q21="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointGroupLinkResponse">
+		<wsdl:part name="CreateUsagePointGroupLinkResponse" element="q22:CreateUsagePointGroupLinkResponse" xmlns:q22="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointGroupLinkRequest">
+		<wsdl:part name="DeleteUsagePointGroupLinkRequest" element="q23:DeleteUsagePointGroupLinkRequest" xmlns:q23="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointGroupLinkResponse">
+		<wsdl:part name="DeleteUsagePointGroupLinkResponse" element="q24:DeleteUsagePointGroupLinkResponse" xmlns:q24="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetEndDeviceRequest">
+		<wsdl:part name="GetEndDeviceRequest" element="q25:GetEndDeviceRequest" xmlns:q25="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetEndDeviceResponse">
+		<wsdl:part name="GetEndDeviceResponse" element="q26:GetEndDeviceResponse" xmlns:q26="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteEndDeviceRequest">
+		<wsdl:part name="DeleteEndDeviceRequest" element="q27:DeleteEndDeviceRequest" xmlns:q27="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteEndDeviceResponse">
+		<wsdl:part name="DeleteEndDeviceResponse" element="q28:DeleteEndDeviceResponse" xmlns:q28="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetProductRequest">
+		<wsdl:part name="GetProductRequest" element="q29:GetProductRequest" xmlns:q29="http://aidon.com/IEC/Management/v2/ProductMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetProductResponse">
+		<wsdl:part name="GetProductResponse" element="q30:GetProductResponse" xmlns:q30="http://aidon.com/IEC/Management/v2/ProductMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetContractRequest">
+		<wsdl:part name="GetContractRequest" element="q31:GetContractRequest" xmlns:q31="http://aidon.com/IEC/Management/v2/ContractMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetContractResponse">
+		<wsdl:part name="GetContractResponse" element="q32:GetContractResponse" xmlns:q32="http://aidon.com/IEC/Management/v2/ContractMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetConfigurationRequest">
+		<wsdl:part name="GetConfigurationRequest" element="q33:GetConfigurationRequest" xmlns:q33="http://aidon.com/IEC/Management/v2/ConfigurationMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetConfigurationResponse">
+		<wsdl:part name="GetConfigurationResponse" element="q34:GetConfigurationResponse" xmlns:q34="http://aidon.com/IEC/Management/v2/ConfigurationMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointGroupRequest">
+		<wsdl:part name="GetUsagePointGroupRequest" element="q35:GetUsagePointGroupRequest" xmlns:q35="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointGroupResponse">
+		<wsdl:part name="GetUsagePointGroupResponse" element="q36:GetUsagePointGroupResponse" xmlns:q36="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointGroupRequest">
+		<wsdl:part name="CreateUsagePointGroupRequest" element="q37:CreateUsagePointGroupRequest" xmlns:q37="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointGroupResponse">
+		<wsdl:part name="CreateUsagePointGroupResponse" element="q38:CreateUsagePointGroupResponse" xmlns:q38="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointGroupRequest">
+		<wsdl:part name="DeleteUsagePointGroupRequest" element="q39:DeleteUsagePointGroupRequest" xmlns:q39="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUsagePointGroupResponse">
+		<wsdl:part name="DeleteUsagePointGroupResponse" element="q40:DeleteUsagePointGroupResponse" xmlns:q40="http://aidon.com/IEC/Management/v2/UsagePointGroupMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetNetworkRequest">
+		<wsdl:part name="GetNetworkRequest" element="q41:GetNetworkRequest" xmlns:q41="http://aidon.com/IEC/Management/v2/NetworkMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetNetworkResponse">
+		<wsdl:part name="GetNetworkResponse" element="q42:GetNetworkResponse" xmlns:q42="http://aidon.com/IEC/Management/v2/NetworkMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateEndDeviceComponentLinkRequest">
+		<wsdl:part name="CreateEndDeviceComponentLinkRequest" element="q43:CreateEndDeviceComponentLinkRequest" xmlns:q43="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateEndDeviceComponentLinkResponse">
+		<wsdl:part name="CreateEndDeviceComponentLinkResponse" element="q44:CreateEndDeviceComponentLinkResponse" xmlns:q44="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteEndDeviceComponentLinkRequest">
+		<wsdl:part name="DeleteEndDeviceComponentLinkRequest" element="q45:DeleteEndDeviceComponentLinkRequest" xmlns:q45="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteEndDeviceComponentLinkResponse">
+		<wsdl:part name="DeleteEndDeviceComponentLinkResponse" element="q46:DeleteEndDeviceComponentLinkResponse" xmlns:q46="http://aidon.com/IEC/Management/v2/EndDeviceMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointEndDeviceLinkRequest">
+		<wsdl:part name="GetUsagePointEndDeviceLinkRequest" element="q47:GetUsagePointEndDeviceLinkRequest" xmlns:q47="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsagePointEndDeviceLinkResponse">
+		<wsdl:part name="GetUsagePointEndDeviceLinkResponse" element="q48:GetUsagePointEndDeviceLinkResponse" xmlns:q48="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointConfigurationLinkRequest">
+		<wsdl:part name="CreateUsagePointConfigurationLinkRequest" element="q49:CreateUsagePointConfigurationLinkRequest" xmlns:q49="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUsagePointConfigurationLinkResponse">
+		<wsdl:part name="CreateUsagePointConfigurationLinkResponse" element="q50:CreateUsagePointConfigurationLinkResponse" xmlns:q50="http://aidon.com/IEC/Management/v2/MasterDataLinkageConfigMessage"/>
+	</wsdl:message>
+	<wsdl:portType name="IIECManagement">
+		<wsdl:operation name="ChangeUsagePoint">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/ChangeUsagePointRequest" name="ChangeUsagePointRequest" message="tns:ChangeUsagePointRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/ChangeUsagePointResponse" name="ChangeUsagePointResponse" message="tns:ChangeUsagePointResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePoint">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointRequest" name="CreateUsagePointRequest" message="tns:CreateUsagePointRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointResponse" name="CreateUsagePointResponse" message="tns:CreateUsagePointResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePoint">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointRequest" name="GetUsagePointRequest" message="tns:GetUsagePointRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointResponse" name="GetUsagePointResponse" message="tns:GetUsagePointResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePoint">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointRequest" name="DeleteUsagePointRequest" message="tns:DeleteUsagePointRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointResponse" name="DeleteUsagePointResponse" message="tns:DeleteUsagePointResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SearchUsagePoint">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/SearchUsagePointRequest" name="SearchUsagePointRequest" message="tns:SearchUsagePointRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/SearchUsagePointResponse" name="SearchUsagePointResponse" message="tns:SearchUsagePointResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointChangeHistory">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointChangeHistoryRequest" name="GetUsagePointChangeHistoryRequest" message="tns:GetUsagePointChangeHistoryRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointChangeHistoryResponse" name="GetUsagePointChangeHistoryResponse" message="tns:GetUsagePointChangeHistoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointGroupChangeHistory">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointGroupChangeHistoryRequest" name="GetUsagePointGroupChangeHistoryRequest" message="tns:GetUsagePointGroupChangeHistoryRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointGroupChangeHistoryResponse" name="GetUsagePointGroupChangeHistoryResponse" message="tns:GetUsagePointGroupChangeHistoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointEndDeviceLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointEndDeviceLinkRequest" name="CreateUsagePointEndDeviceLinkRequest" message="tns:CreateUsagePointEndDeviceLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointEndDeviceLinkResponse" name="CreateUsagePointEndDeviceLinkResponse" message="tns:CreateUsagePointEndDeviceLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePointEndDeviceLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointEndDeviceLinkRequest" name="DeleteUsagePointEndDeviceLinkRequest" message="tns:DeleteUsagePointEndDeviceLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointEndDeviceLinkResponse" name="DeleteUsagePointEndDeviceLinkResponse" message="tns:DeleteUsagePointEndDeviceLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointContractLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointContractLinkRequest" name="CreateUsagePointContractLinkRequest" message="tns:CreateUsagePointContractLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointContractLinkResponse" name="CreateUsagePointContractLinkResponse" message="tns:CreateUsagePointContractLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointGroupLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointGroupLinkRequest" name="CreateUsagePointGroupLinkRequest" message="tns:CreateUsagePointGroupLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointGroupLinkResponse" name="CreateUsagePointGroupLinkResponse" message="tns:CreateUsagePointGroupLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePointGroupLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointGroupLinkRequest" name="DeleteUsagePointGroupLinkRequest" message="tns:DeleteUsagePointGroupLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointGroupLinkResponse" name="DeleteUsagePointGroupLinkResponse" message="tns:DeleteUsagePointGroupLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetEndDevice">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetEndDeviceRequest" name="GetEndDeviceRequest" message="tns:GetEndDeviceRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetEndDeviceResponse" name="GetEndDeviceResponse" message="tns:GetEndDeviceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteEndDevice">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteEndDeviceRequest" name="DeleteEndDeviceRequest" message="tns:DeleteEndDeviceRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteEndDeviceResponse" name="DeleteEndDeviceResponse" message="tns:DeleteEndDeviceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetProduct">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetProductRequest" name="GetProductRequest" message="tns:GetProductRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetProductResponse" name="GetProductResponse" message="tns:GetProductResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetContract">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetContractRequest" name="GetContractRequest" message="tns:GetContractRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetContractResponse" name="GetContractResponse" message="tns:GetContractResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetConfiguration">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetConfigurationRequest" name="GetConfigurationRequest" message="tns:GetConfigurationRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetConfigurationResponse" name="GetConfigurationResponse" message="tns:GetConfigurationResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointGroup">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointGroupRequest" name="GetUsagePointGroupRequest" message="tns:GetUsagePointGroupRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointGroupResponse" name="GetUsagePointGroupResponse" message="tns:GetUsagePointGroupResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointGroup">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointGroupRequest" name="CreateUsagePointGroupRequest" message="tns:CreateUsagePointGroupRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointGroupResponse" name="CreateUsagePointGroupResponse" message="tns:CreateUsagePointGroupResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePointGroup">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointGroupRequest" name="DeleteUsagePointGroupRequest" message="tns:DeleteUsagePointGroupRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointGroupResponse" name="DeleteUsagePointGroupResponse" message="tns:DeleteUsagePointGroupResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetNetwork">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetNetworkRequest" name="GetNetworkRequest" message="tns:GetNetworkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetNetworkResponse" name="GetNetworkResponse" message="tns:GetNetworkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateEndDeviceComponentLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateEndDeviceComponentLinkRequest" name="CreateEndDeviceComponentLinkRequest" message="tns:CreateEndDeviceComponentLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateEndDeviceComponentLinkResponse" name="CreateEndDeviceComponentLinkResponse" message="tns:CreateEndDeviceComponentLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteEndDeviceComponentLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteEndDeviceComponentLinkRequest" name="DeleteEndDeviceComponentLinkRequest" message="tns:DeleteEndDeviceComponentLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteEndDeviceComponentLinkResponse" name="DeleteEndDeviceComponentLinkResponse" message="tns:DeleteEndDeviceComponentLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointEndDeviceLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointEndDeviceLinkRequest" name="GetUsagePointEndDeviceLinkRequest" message="tns:GetUsagePointEndDeviceLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointEndDeviceLinkResponse" name="GetUsagePointEndDeviceLinkResponse" message="tns:GetUsagePointEndDeviceLinkResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointConfigurationLink">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointConfigurationLinkRequest" name="CreateUsagePointConfigurationLinkRequest" message="tns:CreateUsagePointConfigurationLinkRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointConfigurationLinkResponse" name="CreateUsagePointConfigurationLinkResponse" message="tns:CreateUsagePointConfigurationLinkResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="IECManagement" type="tns:IIECManagement">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ChangeUsagePoint">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/ChangeUsagePointRequest" style="document"/>
+			<wsdl:input name="ChangeUsagePointRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ChangeUsagePointResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePoint">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointRequest" style="document"/>
+			<wsdl:input name="CreateUsagePointRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateUsagePointResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePoint">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointRequest" style="document"/>
+			<wsdl:input name="GetUsagePointRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUsagePointResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePoint">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointRequest" style="document"/>
+			<wsdl:input name="DeleteUsagePointRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteUsagePointResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SearchUsagePoint">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/SearchUsagePointRequest" style="document"/>
+			<wsdl:input name="SearchUsagePointRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SearchUsagePointResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointChangeHistory">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointChangeHistoryRequest" style="document"/>
+			<wsdl:input name="GetUsagePointChangeHistoryRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUsagePointChangeHistoryResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointGroupChangeHistory">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointGroupChangeHistoryRequest" style="document"/>
+			<wsdl:input name="GetUsagePointGroupChangeHistoryRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUsagePointGroupChangeHistoryResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointEndDeviceLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointEndDeviceLinkRequest" style="document"/>
+			<wsdl:input name="CreateUsagePointEndDeviceLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateUsagePointEndDeviceLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePointEndDeviceLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointEndDeviceLinkRequest" style="document"/>
+			<wsdl:input name="DeleteUsagePointEndDeviceLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteUsagePointEndDeviceLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointContractLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointContractLinkRequest" style="document"/>
+			<wsdl:input name="CreateUsagePointContractLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateUsagePointContractLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointGroupLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointGroupLinkRequest" style="document"/>
+			<wsdl:input name="CreateUsagePointGroupLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateUsagePointGroupLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePointGroupLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointGroupLinkRequest" style="document"/>
+			<wsdl:input name="DeleteUsagePointGroupLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteUsagePointGroupLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetEndDevice">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetEndDeviceRequest" style="document"/>
+			<wsdl:input name="GetEndDeviceRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetEndDeviceResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteEndDevice">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteEndDeviceRequest" style="document"/>
+			<wsdl:input name="DeleteEndDeviceRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteEndDeviceResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetProduct">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetProductRequest" style="document"/>
+			<wsdl:input name="GetProductRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetProductResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetContract">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetContractRequest" style="document"/>
+			<wsdl:input name="GetContractRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetContractResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetConfiguration">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetConfigurationRequest" style="document"/>
+			<wsdl:input name="GetConfigurationRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetConfigurationResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointGroup">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointGroupRequest" style="document"/>
+			<wsdl:input name="GetUsagePointGroupRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUsagePointGroupResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointGroup">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointGroupRequest" style="document"/>
+			<wsdl:input name="CreateUsagePointGroupRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateUsagePointGroupResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUsagePointGroup">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteUsagePointGroupRequest" style="document"/>
+			<wsdl:input name="DeleteUsagePointGroupRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteUsagePointGroupResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetNetwork">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetNetworkRequest" style="document"/>
+			<wsdl:input name="GetNetworkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetNetworkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateEndDeviceComponentLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateEndDeviceComponentLinkRequest" style="document"/>
+			<wsdl:input name="CreateEndDeviceComponentLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateEndDeviceComponentLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteEndDeviceComponentLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/DeleteEndDeviceComponentLinkRequest" style="document"/>
+			<wsdl:input name="DeleteEndDeviceComponentLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteEndDeviceComponentLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsagePointEndDeviceLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/GetUsagePointEndDeviceLinkRequest" style="document"/>
+			<wsdl:input name="GetUsagePointEndDeviceLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUsagePointEndDeviceLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUsagePointConfigurationLink">
+			<soap:operation soapAction="http://aidon.com/IEC/Management/v2/IECManagementPortType/CreateUsagePointConfigurationLinkRequest" style="document"/>
+			<wsdl:input name="CreateUsagePointConfigurationLinkRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateUsagePointConfigurationLinkResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="IECManagement">
+		<wsdl:port name="IECManagement" binding="tns:IECManagement">
+			<soap:address location="http://localhost:26979/IECManagement.svc"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

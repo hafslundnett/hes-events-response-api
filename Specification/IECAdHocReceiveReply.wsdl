@@ -1,0 +1,1987 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="IECAdHocReceiveReply" targetNamespace="http://aidon.com/IEC/AdHoc/v4/ReceiveReply" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/ReceiveReply" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+	<wsp:Policy wsu:Id="IECAdHocReceiveReply_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/MeterReading#"/>
+			<xs:element name="ReplyCircuitBreakerControlRequest" type="tns:ExecuteCircuitBreakerControlResponseMessageType"/>
+			<xs:complexType name="ExecuteCircuitBreakerControlResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfCircuitBreakerStatusPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfCircuitBreakerStatusPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:CircuitBreakerStatusPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q2:AsyncReplyType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CircuitBreakerStatusPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceEvents" type="q3:ArrayOfEndDeviceEventWithDeviceAndType" xmlns:q3="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="ReplyCircuitBreakerControlResponse" type="q4:AsyncAcknowledgementResponseMessageType" xmlns:q4="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyRelayControlRequest" type="tns:ExecuteRelayControlResponseMessageType"/>
+			<xs:complexType name="ExecuteRelayControlResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfRelayPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfRelayPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:RelayPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RelayPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q5:RelayEndDeviceControl" xmlns:q5="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyRelayControlResponse" type="q6:AsyncAcknowledgementResponseMessageType" xmlns:q6="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEndDeviceRelayRequest" type="tns:GetEndDeviceRelayResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceRelayResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfRelayStatePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfRelayStatePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:RelayStatePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="RelayStatePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q7:RelayEndDeviceControlWithEndDeviceAndAction" xmlns:q7="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceFunction" nillable="true" type="tns:EndDeviceFunction"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceFunction">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ReplyEndDeviceRelayResponse" type="q8:AsyncAcknowledgementResponseMessageType" xmlns:q8="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyContractUploadRequest" type="tns:ExecuteContractUploadResponseMessageType"/>
+			<xs:complexType name="ExecuteContractUploadResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfContractUploadWithEndDevicePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfContractUploadWithEndDevicePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ContractUploadWithEndDevicePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ContractUploadWithEndDevicePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q9:ContractUploadEndDeviceControlWithEndDevice" xmlns:q9="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyContractUploadResponse" type="q10:AsyncAcknowledgementResponseMessageType" xmlns:q10="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyConfigurationUploadRequest" type="tns:ExecuteConfigurationUploadResponseMessageType"/>
+			<xs:complexType name="ExecuteConfigurationUploadResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfConfigurationUploadWithEndDevicePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfConfigurationUploadWithEndDevicePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ConfigurationUploadWithEndDevicePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ConfigurationUploadWithEndDevicePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q11:ConfigurationUploadEndDeviceControlWithEndDevice" xmlns:q11="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyConfigurationUploadResponse" type="q12:AsyncAcknowledgementResponseMessageType" xmlns:q12="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyManualBillingBreakRequest" type="tns:ExecuteManualBillingBreakResponseMessageType"/>
+			<xs:complexType name="ExecuteManualBillingBreakResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfBillingPeriodMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfBillingPeriodMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="q13:BillingPeriodMeterReadingPayloadType" xmlns:q13="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyManualBillingBreakResponse" type="q14:AsyncAcknowledgementResponseMessageType" xmlns:q14="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyProductChangeRequest" type="tns:ExecuteProductChangeResponseMessageType"/>
+			<xs:complexType name="ExecuteProductChangeResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfExecuteProductChangePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfExecuteProductChangePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ExecuteProductChangePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ExecuteProductChangePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q15:ProductChangeEndDeviceControlWithEndDevice" xmlns:q15="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyProductChangeResponse" type="q16:AsyncAcknowledgementResponseMessageType" xmlns:q16="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplySoftwareFuseControlRequest" type="tns:ExecuteSoftwareFuseControlResponseMessageType"/>
+			<xs:complexType name="ExecuteSoftwareFuseControlResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfSoftwareFuseStatusPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfSoftwareFuseStatusPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:SoftwareFuseStatusPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SoftwareFuseStatusPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q17:UsagePoint" xmlns:q17="http://iec.ch/TC57/2007/MeterReading#"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q18:MeterReadingEndDeviceId" xmlns:q18="http://iec.ch/TC57/2007/MeterReading#"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="phaseCurrentLimit" nillable="true" type="xs:int"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="totalPowerLimit" nillable="true" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplySoftwareFuseControlResponse" type="q19:AsyncAcknowledgementResponseMessageType" xmlns:q19="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyScheduledEndDeviceControlRequest" type="tns:GetScheduledEndDeviceControlResponseMessageType"/>
+			<xs:complexType name="GetScheduledEndDeviceControlResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfScheduledEndDeviceControlPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfScheduledEndDeviceControlPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ScheduledEndDeviceControlPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ScheduledEndDeviceControlPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceControls" type="q20:ArrayOfScheduledEndDeviceControl" xmlns:q20="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyScheduledEndDeviceControlResponse" type="q21:AsyncAcknowledgementResponseMessageType" xmlns:q21="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyScheduledEndDeviceControlDeletedRequest" type="tns:DeleteScheduledEndDeviceControlResponseMessageType"/>
+			<xs:complexType name="DeleteScheduledEndDeviceControlResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfDeleteScheduledEndDeviceControlResponsePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfDeleteScheduledEndDeviceControlResponsePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:DeleteScheduledEndDeviceControlResponsePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DeleteScheduledEndDeviceControlResponsePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceControls" type="q22:ArrayOfEndDeviceControlWithUsagePoint" xmlns:q22="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyScheduledEndDeviceControlDeletedResponse" type="q23:AsyncAcknowledgementResponseMessageType" xmlns:q23="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyCommunicationRoleChangeRequest" type="tns:ExecuteCommunicationRoleChangeResponseMessageType"/>
+			<xs:complexType name="ExecuteCommunicationRoleChangeResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfExecuteCommunicationRoleChangeResponsePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfExecuteCommunicationRoleChangeResponsePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ExecuteCommunicationRoleChangeResponsePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ExecuteCommunicationRoleChangeResponsePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q24:CommunicationRoleEndDeviceControl" xmlns:q24="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyCommunicationRoleChangeResponse" type="q25:AsyncAcknowledgementResponseMessageType" xmlns:q25="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyExecuteHanControlRequest" type="tns:ExecuteHanControlResponseMessageType"/>
+			<xs:complexType name="ExecuteHanControlResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfExecuteHanControlResponsePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfExecuteHanControlResponsePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ExecuteHanControlResponsePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ExecuteHanControlResponsePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceControl" nillable="true" type="q26:EndDeviceControlWithEndDeviceAndAction" xmlns:q26="http://iec.ch/TC57/2007/EndDeviceControl#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyExecuteHanControlResponse" type="q27:AsyncAcknowledgementResponseMessageType" xmlns:q27="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2011/schema/message" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2011/schema/message">
+			<xs:complexType name="HeaderType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Verb">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="cancel"/>
+								<xs:enumeration value="canceled"/>
+								<xs:enumeration value="change"/>
+								<xs:enumeration value="changed"/>
+								<xs:enumeration value="create"/>
+								<xs:enumeration value="created"/>
+								<xs:enumeration value="close"/>
+								<xs:enumeration value="closed"/>
+								<xs:enumeration value="delete"/>
+								<xs:enumeration value="deleted"/>
+								<xs:enumeration value="get"/>
+								<xs:enumeration value="reply"/>
+								<xs:enumeration value="execute"/>
+								<xs:enumeration value="executed"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="Noun" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Timestamp" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Source" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="MessageID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="CorrelationID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="AccessToken" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="OrganisationID" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UseGuaranteedDelivery" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AsyncReplyType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Result">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="OK"/>
+								<xs:enumeration value="PARTIAL"/>
+								<xs:enumeration value="FAILED"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:AsyncErrorType"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ID">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1" name="sentResponses" nillable="true" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AsyncErrorType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="code" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="level">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="INFORM"/>
+								<xs:enumeration value="WARNING"/>
+								<xs:enumeration value="FATAL"/>
+								<xs:enumeration value="CATASTROPHIC"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1" name="reason" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="details" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="stackTrace" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReplyType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Result">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="OK"/>
+								<xs:enumeration value="PARTIAL"/>
+								<xs:enumeration value="FAILED"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:ErrorType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ErrorType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="code" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="level">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="INFORM"/>
+								<xs:enumeration value="WARNING"/>
+								<xs:enumeration value="FATAL"/>
+								<xs:enumeration value="CATASTROPHIC"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1" name="reason" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="details" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="stackTrace" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ID">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="objectType" type="xs:string"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EndDeviceEvent#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EndDeviceEvent#">
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDevice#"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/MeterReading#"/>
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:complexType name="ArrayOfEndDeviceEventWithDeviceAndType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceEvent" nillable="true" type="tns:EndDeviceEventWithDeviceAndType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceEventWithDeviceAndType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q1:EndDeviceID" xmlns:q1="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceEventType" nillable="true" type="tns:EndDeviceEventType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceEventType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="domain" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="subdomain" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="eventOrAction" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="EndDeviceEvents" type="tns:ArrayOfEndDeviceEvent"/>
+			<xs:complexType name="ArrayOfEndDeviceEvent">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceEvent" type="tns:EndDeviceEvent"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceEvent">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="createdDateTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceEventDetails" type="tns:EndDeviceEventDetails"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDeviceEventType" type="tns:EndDeviceEventType"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:EventMeterReadings"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" type="q2:identifiedObject" xmlns:q2="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDevice" type="q3:identifiedObject" xmlns:q3="http://aidon.com/IEC/Management/v2/Common"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceEventDetails">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceEventDetail" type="tns:EndDeviceEventDetail"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceEventDetail">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EventMeterReadings">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="q4:Reading" xmlns:q4="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EndDevice#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EndDevice#">
+			<xs:complexType name="EndDeviceID">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="mRID" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDevice">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="usageKind" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="configuredUsageKind" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/AsyncMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:complexType name="AsyncAcknowledgementResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:ResponseMessageTypeBase"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q2:ReplyType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EndDeviceControl#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EndDeviceControl#">
+			<xs:import namespace="http://aidon.com/IEC/Management/v2/Common"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDevice#"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/MeterReading#"/>
+			<xs:complexType name="RelayEndDeviceControl">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceControl">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q1:identifiedObject" xmlns:q1="http://aidon.com/IEC/Management/v2/Common"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceControl">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceAction" nillable="true" type="tns:EndDeviceAction"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceAction">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="command" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RelayEndDeviceControlWithEndDeviceAndAction">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceControlWithEndDeviceAndAction">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="reason" nillable="true" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceControlWithEndDeviceAndAction">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q2:EndDeviceID" xmlns:q2="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceAction" nillable="true" type="tns:EndDeviceAction"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ContractUploadEndDeviceControlWithEndDevice">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceControlWithEndDeviceAndAction">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Contract" nillable="true" type="q3:identifiedObject" xmlns:q3="http://aidon.com/IEC/Management/v2/Common"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ConfigurationUploadEndDeviceControlWithEndDevice">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceControlWithEndDeviceAndAction">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Configuration" nillable="true" type="q4:identifiedObject" xmlns:q4="http://aidon.com/IEC/Management/v2/Common"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ProductChangeEndDeviceControlWithEndDevice">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceControlWithEndDeviceAndAction">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="Product" nillable="true" type="q5:identifiedObject" xmlns:q5="http://aidon.com/IEC/Management/v2/Common"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfScheduledEndDeviceControl">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceControl" type="tns:ScheduledEndDeviceControl"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ScheduledEndDeviceControl">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q6:identifiedObject" xmlns:q6="http://aidon.com/IEC/Management/v2/Common"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDeviceAction" nillable="true" type="tns:EndDeviceActionWithStartDateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="scheduledInterval" nillable="true" type="tns:ScheduledInterval"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceActionWithStartDateTime">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceAction">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="startDateTime" nillable="true" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ScheduledInterval">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="start" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="end" nillable="true" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfEndDeviceControlWithUsagePoint">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceControl" type="tns:EndDeviceControlWithUsagePoint"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceControlWithUsagePoint">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="q7:UsagePoint" xmlns:q7="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CommunicationRoleEndDeviceControl">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:EndDeviceControlWithEndDeviceAndAction">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="ConfiguredCommunicationRole" nillable="true" type="q8:identifiedObject" xmlns:q8="http://aidon.com/IEC/Management/v2/Common"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="ActualCommunicationRole" nillable="true" type="q9:identifiedObject" xmlns:q9="http://aidon.com/IEC/Management/v2/Common"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Management/v2/Common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Management/v2/Common">
+			<xs:complexType name="identifiedObject">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage">
+			<xs:import namespace="http://iec.ch/TC57/2007/MeterReading#"/>
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/ComFunctionMessage"/>
+			<xs:complexType name="BillingPeriodMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:complexType name="ArrayOfMeterReading">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="MeterReading" type="q1:MeterReading" xmlns:q1="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ReplyEnergySeriesRequest" type="tns:GetEnergySeriesResponseMessageType"/>
+			<xs:complexType name="GetEnergySeriesResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEnergySeriesMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEnergySeriesMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EnergySeriesMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q3:AsyncReplyType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EnergySeriesMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReadingWithQuality"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfMeterReadingWithQuality">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="MeterReading" type="q4:MeterReadingWithQuality" xmlns:q4="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ReplyEnergySeriesResponse" type="q5:AsyncAcknowledgementResponseMessageType" xmlns:q5="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyBillingPeriodRequest" type="tns:GetBillingPeriodResponseMessageType"/>
+			<xs:complexType name="GetBillingPeriodResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfBillingPeriodMeterReadingWithQualityPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfBillingPeriodMeterReadingWithQualityPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:BillingPeriodMeterReadingWithQualityPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="BillingPeriodMeterReadingWithQualityPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReadingWithQuality"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyBillingPeriodResponse" type="q6:AsyncAcknowledgementResponseMessageType" xmlns:q6="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyMomentaryReadingsRequest" type="tns:GetMomentaryReadingsResponseMessageType"/>
+			<xs:complexType name="GetMomentaryReadingsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfMomentaryReadingsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfMomentaryReadingsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:MomentaryReadingsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="MomentaryReadingsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReadingWithQuality"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyMomentaryReadingsResponse" type="q7:AsyncAcknowledgementResponseMessageType" xmlns:q7="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEndDeviceWANCommunicationStatusRequest" type="tns:GetEndDeviceWANCommunicationStatusResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceWANCommunicationStatusResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceWANCommunicationStatusPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceWANCommunicationStatusPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="q8:EndDeviceWANCommunicationStatusPayloadType" xmlns:q8="http://aidon.com/IEC/AdHoc/v4/ComFunctionMessage"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyEndDeviceWANCommunicationStatusResponse" type="q9:AsyncAcknowledgementResponseMessageType" xmlns:q9="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyDipAndSwellLogRequest" type="tns:GetDipAndSwellLogResponseMessageType"/>
+			<xs:complexType name="GetDipAndSwellLogResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfDipAndSwellLogMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfDipAndSwellLogMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:DipAndSwellLogMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DipAndSwellLogMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReadingWithLength"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfMeterReadingWithLength">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="MeterReading" type="q10:MeterReadingWithLength" xmlns:q10="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ReplyDipAndSwellLogResponse" type="q11:AsyncAcknowledgementResponseMessageType" xmlns:q11="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyVoltageStatisticsRequest" type="tns:GetVoltageStatisticsResponseMessageType"/>
+			<xs:complexType name="GetVoltageStatisticsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfVoltageStatisticsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfVoltageStatisticsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:VoltageStatisticsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="VoltageStatisticsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyVoltageStatisticsResponse" type="q12:AsyncAcknowledgementResponseMessageType" xmlns:q12="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyCurrentStatisticsRequest" type="tns:GetCurrentStatisticsResponseMessageType"/>
+			<xs:complexType name="GetCurrentStatisticsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfCurrentStatisticsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfCurrentStatisticsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:CurrentStatisticsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CurrentStatisticsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyCurrentStatisticsResponse" type="q13:AsyncAcknowledgementResponseMessageType" xmlns:q13="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyHarmonicsAndFrequencyStatisticsRequest" type="tns:GetHarmonicsAndFrequencyStatisticsResponseMessageType"/>
+			<xs:complexType name="GetHarmonicsAndFrequencyStatisticsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfHarmonicsAndFrequencyStatisticsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfHarmonicsAndFrequencyStatisticsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:HarmonicsAndFrequencyStatisticsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="HarmonicsAndFrequencyStatisticsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyHarmonicsAndFrequencyStatisticsResponse" type="q14:AsyncAcknowledgementResponseMessageType" xmlns:q14="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyVoltageRecordRequest" type="tns:GetVoltageRecordResponseMessageType"/>
+			<xs:complexType name="GetVoltageRecordResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfVoltageRecordMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfVoltageRecordMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:VoltageRecordMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="VoltageRecordMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyVoltageRecordResponse" type="q15:AsyncAcknowledgementResponseMessageType" xmlns:q15="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyVoltageHitTableStatisticsRequest" type="tns:GetVoltageHitTableStatisticsResponseMessageType"/>
+			<xs:complexType name="GetVoltageHitTableStatisticsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfVoltageHitTableStatisticsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfVoltageHitTableStatisticsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:VoltageHitTableStatisticsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="VoltageHitTableStatisticsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyVoltageHitTableStatisticsResponse" type="q16:AsyncAcknowledgementResponseMessageType" xmlns:q16="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEarthFaultStatisticsRequest" type="tns:GetEarthFaultStatisticsResponseMessageType"/>
+			<xs:complexType name="GetEarthFaultStatisticsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEarthFaultStatisticsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEarthFaultStatisticsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EarthFaultStatisticsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="EarthFaultStatisticsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReading"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyEarthFaultStatisticsResponse" type="q17:AsyncAcknowledgementResponseMessageType" xmlns:q17="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyExtendedHarmonicsRequest" type="tns:GetExtendedHarmonicsResponseMessageType"/>
+			<xs:complexType name="GetExtendedHarmonicsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfExtendedHarmonicsMeterReadingPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfExtendedHarmonicsMeterReadingPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ExtendedHarmonicsMeterReadingPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ExtendedHarmonicsMeterReadingPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="MeterReadings" type="tns:ArrayOfMeterReadingWithQuality"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyExtendedHarmonicsResponse" type="q18:AsyncAcknowledgementResponseMessageType" xmlns:q18="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/MeterReading#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/MeterReading#">
+			<xs:complexType name="MeterReading">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="tns:UsagePoint"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="tns:MeterReadingEndDeviceId"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfReading"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UsagePoint">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MeterReadingEndDeviceId">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="mRID" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfReading">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="tns:Reading"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Reading">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="timeStamp" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:decimal"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReadingType">
+						<xs:complexType>
+							<xs:attribute name="ref" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MeterReadingWithQuality">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="tns:UsagePoint"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="tns:MeterReadingEndDeviceId"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfReadingWithQuality"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfReadingWithQuality">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="tns:ReadingWithQuality"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReadingWithQuality">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="timeStamp" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:decimal"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReadingType">
+						<xs:complexType>
+							<xs:attribute name="ref" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReadingQuality" type="tns:ReadingQualityType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReadingQualityType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="category" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ComFunctionReading">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:decimal"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReadingType">
+						<xs:complexType>
+							<xs:attribute name="ref" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MeterReadingWithLength">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="UsagePoint" nillable="true" type="tns:UsagePoint"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="tns:MeterReadingEndDeviceId"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfReadingWithLength"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfReadingWithLength">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="tns:ReadingWithLength"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReadingWithLength">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="timeStamp" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:decimal"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReadingType">
+						<xs:complexType>
+							<xs:attribute name="ref" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="1" maxOccurs="1" name="length" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ComFunctionReadingStringValue">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="ReadingType">
+						<xs:complexType>
+							<xs:attribute name="ref" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/ComFunctionMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/ComFunctionMessage">
+			<xs:import namespace="http://iec.ch/TC57/2007/ComFunction#"/>
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:complexType name="EndDeviceWANCommunicationStatusPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="ComFunction" type="q1:EndDeviceConnectionStatusComFunction" xmlns:q1="http://iec.ch/TC57/2007/ComFunction#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="ReplyEndDeviceCommunicationStatusRequest" type="tns:GetEndDeviceCommunicationStatusResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceCommunicationStatusResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceCommunicationStatusPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceCommunicationStatusPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EndDeviceCommunicationStatusPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q2:HeaderType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q3:AsyncReplyType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceCommunicationStatusPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="ComFunctions" type="tns:ArrayOfEndDeviceStatusComFunction"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfEndDeviceStatusComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="ComFunction" type="q4:EndDeviceStatusComFunction" xmlns:q4="http://iec.ch/TC57/2007/ComFunction#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ReplyEndDeviceCommunicationStatusResponse" type="q5:AsyncAcknowledgementResponseMessageType" xmlns:q5="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/ComFunction#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/ComFunction#">
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDevice#"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/MeterReading#"/>
+			<xs:complexType name="EndDeviceConnectionStatusComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDevice" type="q1:EndDeviceID" xmlns:q1="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="technology" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="timeStamp" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfComFunctionReading"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfComFunctionReading">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="q2:ComFunctionReading" xmlns:q2="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceStatusComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDevice" type="q3:EndDeviceID" xmlns:q3="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="timeStamp" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfComFunctionReading"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ComFunctions" nillable="true" type="tns:ArrayOfComFunction"/>
+			<xs:complexType name="ArrayOfComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="ComFunction" type="tns:ComFunction"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="q4:EndDevice" xmlns:q4="http://iec.ch/TC57/2007/EndDevice#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" type="q5:UsagePoint" xmlns:q5="http://iec.ch/TC57/2007/MeterReading#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="amrRouter" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="technology" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="timeStamp" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="lastCommunicationTimestamp" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfComFunctionReadingStringValue"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfComFunctionReadingStringValue">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="q6:ComFunctionReadingStringValue" xmlns:q6="http://iec.ch/TC57/2007/MeterReading#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NANDiagnosticsComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="EndDevice" nillable="true" type="tns:EndDeviceWithDurationOfNetworkParticipation"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" type="q7:UsagePoint" xmlns:q7="http://iec.ch/TC57/2007/MeterReading#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="amrRouter" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="technology" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="TimePeriod" type="tns:TimePeriod"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfComFunctionReadingStringValue"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceWithDurationOfNetworkParticipation">
+				<xs:complexContent mixed="false">
+					<xs:extension base="q8:EndDevice" xmlns:q8="http://iec.ch/TC57/2007/EndDevice#">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="durationOfNetworkParticipation" nillable="true" type="xs:string"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="TimePeriod">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="start" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="end" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/EndDeviceEventMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/EndDeviceEventMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEndDeviceEventRequest" type="tns:GetEndDeviceEventResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceEventResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceEventPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceEventPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EndDeviceEventPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q2:AsyncReplyType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceEventPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q3:EndDeviceEvents" xmlns:q3="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="ReplyEndDeviceEventResponse" type="q4:AsyncAcknowledgementResponseMessageType" xmlns:q4="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEndDeviceEventHistoryRequest" type="tns:GetEndDeviceEventHistoryResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceEventHistoryResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceEventPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ReplyEndDeviceEventHistoryResponse" type="q5:AsyncAcknowledgementResponseMessageType" xmlns:q5="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/EndDeviceTopologyMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/EndDeviceTopologyMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/ComFunction#"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEndDeviceTopologyRequest" type="tns:GetEndDeviceTopologyResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceTopologyResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceTopologyPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceTopologyPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EndDeviceTopologyPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q2:AsyncReplyType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceTopologyPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" ref="q3:ComFunctions" xmlns:q3="http://iec.ch/TC57/2007/ComFunction#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="ReplyEndDeviceTopologyResponse" type="q4:AsyncAcknowledgementResponseMessageType" xmlns:q4="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/PowerOutageMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/PowerOutageMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/PowerOutage#"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyPowerOutageLogRequest" type="tns:GetPowerOutageLogResponseMessageType"/>
+			<xs:complexType name="GetPowerOutageLogResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfPowerOutagePayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfPowerOutagePayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:PowerOutagePayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q2:AsyncReplyType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PowerOutagePayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" ref="q3:PowerOutages" xmlns:q3="http://iec.ch/TC57/2007/PowerOutage#"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:element name="ReplyPowerOutageLogResponse" type="q4:AsyncAcknowledgementResponseMessageType" xmlns:q4="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/PowerOutage#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/PowerOutage#">
+			<xs:import namespace="http://iec.ch/TC57/2007/MeterReading#"/>
+			<xs:element name="PowerOutages" type="tns:ArrayOfPowerOutage"/>
+			<xs:complexType name="ArrayOfPowerOutage">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="PowerOutage" type="tns:PowerOutage"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PowerOutage">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" type="q1:UsagePoint" xmlns:q1="http://iec.ch/TC57/2007/MeterReading#"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="EndDevice" type="q2:MeterReadingEndDeviceId" xmlns:q2="http://iec.ch/TC57/2007/MeterReading#"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="startTime" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="endTime" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="outageType" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="phase" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/AdHoc/v4/EndDeviceNANDiagnosticsMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/AdHoc/v4/EndDeviceNANDiagnosticsMessage">
+			<xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+			<xs:import namespace="http://iec.ch/TC57/2007/ComFunction#"/>
+			<xs:import namespace="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+			<xs:element name="ReplyEndDeviceNANDiagnosticsRequest" type="tns:GetEndDeviceNANDiagnosticsResponseMessageType"/>
+			<xs:complexType name="GetEndDeviceNANDiagnosticsResponseMessageType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceNANDiagnosticsPayloadType"/>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageWithPayloadTypeBaseOfEndDeviceNANDiagnosticsPayloadType" abstract="true">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:AsyncResponseMessageTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EndDeviceNANDiagnosticsPayloadType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AsyncResponseMessageTypeBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q2:AsyncReplyType" xmlns:q2="http://iec.ch/TC57/2011/schema/message"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EndDeviceNANDiagnosticsPayloadType">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:PayloadTypeBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="ComFunctions" nillable="true" type="tns:ArrayOfNANDiagnosticsComFunction"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PayloadTypeBase" abstract="true"/>
+			<xs:complexType name="ArrayOfNANDiagnosticsComFunction">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="ComFunction" type="q3:NANDiagnosticsComFunction" xmlns:q3="http://iec.ch/TC57/2007/ComFunction#"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ReplyEndDeviceNANDiagnosticsResponse" type="q4:AsyncAcknowledgementResponseMessageType" xmlns:q4="http://aidon.com/IEC/AdHoc/v4/AsyncMessage"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ReplyCircuitBreakerControlRequest">
+		<wsdl:part name="ReplyCircuitBreakerControlRequest" element="q1:ReplyCircuitBreakerControlRequest" xmlns:q1="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyCircuitBreakerControlResponse">
+		<wsdl:part name="ReplyCircuitBreakerControlResponse" element="q2:ReplyCircuitBreakerControlResponse" xmlns:q2="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyRelayControlRequest">
+		<wsdl:part name="ReplyRelayControlRequest" element="q3:ReplyRelayControlRequest" xmlns:q3="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyRelayControlResponse">
+		<wsdl:part name="ReplyRelayControlResponse" element="q4:ReplyRelayControlResponse" xmlns:q4="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceRelayRequest">
+		<wsdl:part name="ReplyEndDeviceRelayRequest" element="q5:ReplyEndDeviceRelayRequest" xmlns:q5="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceRelayResponse">
+		<wsdl:part name="ReplyEndDeviceRelayResponse" element="q6:ReplyEndDeviceRelayResponse" xmlns:q6="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyContractUploadRequest">
+		<wsdl:part name="ReplyContractUploadRequest" element="q7:ReplyContractUploadRequest" xmlns:q7="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyContractUploadResponse">
+		<wsdl:part name="ReplyContractUploadResponse" element="q8:ReplyContractUploadResponse" xmlns:q8="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyConfigurationUploadRequest">
+		<wsdl:part name="ReplyConfigurationUploadRequest" element="q9:ReplyConfigurationUploadRequest" xmlns:q9="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyConfigurationUploadResponse">
+		<wsdl:part name="ReplyConfigurationUploadResponse" element="q10:ReplyConfigurationUploadResponse" xmlns:q10="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyManualBillingBreakRequest">
+		<wsdl:part name="ReplyManualBillingBreakRequest" element="q11:ReplyManualBillingBreakRequest" xmlns:q11="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyManualBillingBreakResponse">
+		<wsdl:part name="ReplyManualBillingBreakResponse" element="q12:ReplyManualBillingBreakResponse" xmlns:q12="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyProductChangeRequest">
+		<wsdl:part name="ReplyProductChangeRequest" element="q13:ReplyProductChangeRequest" xmlns:q13="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyProductChangeResponse">
+		<wsdl:part name="ReplyProductChangeResponse" element="q14:ReplyProductChangeResponse" xmlns:q14="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEnergySeriesRequest">
+		<wsdl:part name="ReplyEnergySeriesRequest" element="q15:ReplyEnergySeriesRequest" xmlns:q15="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEnergySeriesResponse">
+		<wsdl:part name="ReplyEnergySeriesResponse" element="q16:ReplyEnergySeriesResponse" xmlns:q16="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyBillingPeriodRequest">
+		<wsdl:part name="ReplyBillingPeriodRequest" element="q17:ReplyBillingPeriodRequest" xmlns:q17="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyBillingPeriodResponse">
+		<wsdl:part name="ReplyBillingPeriodResponse" element="q18:ReplyBillingPeriodResponse" xmlns:q18="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyMomentaryReadingsRequest">
+		<wsdl:part name="ReplyMomentaryReadingsRequest" element="q19:ReplyMomentaryReadingsRequest" xmlns:q19="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyMomentaryReadingsResponse">
+		<wsdl:part name="ReplyMomentaryReadingsResponse" element="q20:ReplyMomentaryReadingsResponse" xmlns:q20="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceWANCommunicationStatusRequest">
+		<wsdl:part name="ReplyEndDeviceWANCommunicationStatusRequest" element="q21:ReplyEndDeviceWANCommunicationStatusRequest" xmlns:q21="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceWANCommunicationStatusResponse">
+		<wsdl:part name="ReplyEndDeviceWANCommunicationStatusResponse" element="q22:ReplyEndDeviceWANCommunicationStatusResponse" xmlns:q22="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceEventRequest">
+		<wsdl:part name="ReplyEndDeviceEventRequest" element="q23:ReplyEndDeviceEventRequest" xmlns:q23="http://aidon.com/IEC/AdHoc/v4/EndDeviceEventMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceEventResponse">
+		<wsdl:part name="ReplyEndDeviceEventResponse" element="q24:ReplyEndDeviceEventResponse" xmlns:q24="http://aidon.com/IEC/AdHoc/v4/EndDeviceEventMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceEventHistoryRequest">
+		<wsdl:part name="ReplyEndDeviceEventHistoryRequest" element="q25:ReplyEndDeviceEventHistoryRequest" xmlns:q25="http://aidon.com/IEC/AdHoc/v4/EndDeviceEventMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceEventHistoryResponse">
+		<wsdl:part name="ReplyEndDeviceEventHistoryResponse" element="q26:ReplyEndDeviceEventHistoryResponse" xmlns:q26="http://aidon.com/IEC/AdHoc/v4/EndDeviceEventMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyDipAndSwellLogRequest">
+		<wsdl:part name="ReplyDipAndSwellLogRequest" element="q27:ReplyDipAndSwellLogRequest" xmlns:q27="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyDipAndSwellLogResponse">
+		<wsdl:part name="ReplyDipAndSwellLogResponse" element="q28:ReplyDipAndSwellLogResponse" xmlns:q28="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceCommunicationStatusRequest">
+		<wsdl:part name="ReplyEndDeviceCommunicationStatusRequest" element="q29:ReplyEndDeviceCommunicationStatusRequest" xmlns:q29="http://aidon.com/IEC/AdHoc/v4/ComFunctionMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceCommunicationStatusResponse">
+		<wsdl:part name="ReplyEndDeviceCommunicationStatusResponse" element="q30:ReplyEndDeviceCommunicationStatusResponse" xmlns:q30="http://aidon.com/IEC/AdHoc/v4/ComFunctionMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceTopologyRequest">
+		<wsdl:part name="ReplyEndDeviceTopologyRequest" element="q31:ReplyEndDeviceTopologyRequest" xmlns:q31="http://aidon.com/IEC/AdHoc/v4/EndDeviceTopologyMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceTopologyResponse">
+		<wsdl:part name="ReplyEndDeviceTopologyResponse" element="q32:ReplyEndDeviceTopologyResponse" xmlns:q32="http://aidon.com/IEC/AdHoc/v4/EndDeviceTopologyMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyPowerOutageLogRequest">
+		<wsdl:part name="ReplyPowerOutageLogRequest" element="q33:ReplyPowerOutageLogRequest" xmlns:q33="http://aidon.com/IEC/AdHoc/v4/PowerOutageMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyPowerOutageLogResponse">
+		<wsdl:part name="ReplyPowerOutageLogResponse" element="q34:ReplyPowerOutageLogResponse" xmlns:q34="http://aidon.com/IEC/AdHoc/v4/PowerOutageMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyVoltageStatisticsRequest">
+		<wsdl:part name="ReplyVoltageStatisticsRequest" element="q35:ReplyVoltageStatisticsRequest" xmlns:q35="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyVoltageStatisticsResponse">
+		<wsdl:part name="ReplyVoltageStatisticsResponse" element="q36:ReplyVoltageStatisticsResponse" xmlns:q36="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyCurrentStatisticsRequest">
+		<wsdl:part name="ReplyCurrentStatisticsRequest" element="q37:ReplyCurrentStatisticsRequest" xmlns:q37="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyCurrentStatisticsResponse">
+		<wsdl:part name="ReplyCurrentStatisticsResponse" element="q38:ReplyCurrentStatisticsResponse" xmlns:q38="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyHarmonicsAndFrequencyStatisticsRequest">
+		<wsdl:part name="ReplyHarmonicsAndFrequencyStatisticsRequest" element="q39:ReplyHarmonicsAndFrequencyStatisticsRequest" xmlns:q39="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyHarmonicsAndFrequencyStatisticsResponse">
+		<wsdl:part name="ReplyHarmonicsAndFrequencyStatisticsResponse" element="q40:ReplyHarmonicsAndFrequencyStatisticsResponse" xmlns:q40="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyVoltageRecordRequest">
+		<wsdl:part name="ReplyVoltageRecordRequest" element="q41:ReplyVoltageRecordRequest" xmlns:q41="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyVoltageRecordResponse">
+		<wsdl:part name="ReplyVoltageRecordResponse" element="q42:ReplyVoltageRecordResponse" xmlns:q42="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyVoltageHitTableStatisticsRequest">
+		<wsdl:part name="ReplyVoltageHitTableStatisticsRequest" element="q43:ReplyVoltageHitTableStatisticsRequest" xmlns:q43="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyVoltageHitTableStatisticsResponse">
+		<wsdl:part name="ReplyVoltageHitTableStatisticsResponse" element="q44:ReplyVoltageHitTableStatisticsResponse" xmlns:q44="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEarthFaultStatisticsRequest">
+		<wsdl:part name="ReplyEarthFaultStatisticsRequest" element="q45:ReplyEarthFaultStatisticsRequest" xmlns:q45="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEarthFaultStatisticsResponse">
+		<wsdl:part name="ReplyEarthFaultStatisticsResponse" element="q46:ReplyEarthFaultStatisticsResponse" xmlns:q46="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplySoftwareFuseControlRequest">
+		<wsdl:part name="ReplySoftwareFuseControlRequest" element="q47:ReplySoftwareFuseControlRequest" xmlns:q47="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplySoftwareFuseControlResponse">
+		<wsdl:part name="ReplySoftwareFuseControlResponse" element="q48:ReplySoftwareFuseControlResponse" xmlns:q48="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceNANDiagnosticsRequest">
+		<wsdl:part name="ReplyEndDeviceNANDiagnosticsRequest" element="q49:ReplyEndDeviceNANDiagnosticsRequest" xmlns:q49="http://aidon.com/IEC/AdHoc/v4/EndDeviceNANDiagnosticsMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyEndDeviceNANDiagnosticsResponse">
+		<wsdl:part name="ReplyEndDeviceNANDiagnosticsResponse" element="q50:ReplyEndDeviceNANDiagnosticsResponse" xmlns:q50="http://aidon.com/IEC/AdHoc/v4/EndDeviceNANDiagnosticsMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyScheduledEndDeviceControlRequest">
+		<wsdl:part name="ReplyScheduledEndDeviceControlRequest" element="q51:ReplyScheduledEndDeviceControlRequest" xmlns:q51="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyScheduledEndDeviceControlResponse">
+		<wsdl:part name="ReplyScheduledEndDeviceControlResponse" element="q52:ReplyScheduledEndDeviceControlResponse" xmlns:q52="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyScheduledEndDeviceControlDeletedRequest">
+		<wsdl:part name="ReplyScheduledEndDeviceControlDeletedRequest" element="q53:ReplyScheduledEndDeviceControlDeletedRequest" xmlns:q53="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyScheduledEndDeviceControlDeletedResponse">
+		<wsdl:part name="ReplyScheduledEndDeviceControlDeletedResponse" element="q54:ReplyScheduledEndDeviceControlDeletedResponse" xmlns:q54="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyExtendedHarmonicsRequest">
+		<wsdl:part name="ReplyExtendedHarmonicsRequest" element="q55:ReplyExtendedHarmonicsRequest" xmlns:q55="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyExtendedHarmonicsResponse">
+		<wsdl:part name="ReplyExtendedHarmonicsResponse" element="q56:ReplyExtendedHarmonicsResponse" xmlns:q56="http://aidon.com/IEC/AdHoc/v4/MeterReadingMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyCommunicationRoleChangeRequest">
+		<wsdl:part name="ReplyCommunicationRoleChangeRequest" element="q57:ReplyCommunicationRoleChangeRequest" xmlns:q57="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyCommunicationRoleChangeResponse">
+		<wsdl:part name="ReplyCommunicationRoleChangeResponse" element="q58:ReplyCommunicationRoleChangeResponse" xmlns:q58="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyExecuteHanControlRequest">
+		<wsdl:part name="ReplyExecuteHanControlRequest" element="q59:ReplyExecuteHanControlRequest" xmlns:q59="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ReplyExecuteHanControlResponse">
+		<wsdl:part name="ReplyExecuteHanControlResponse" element="q60:ReplyExecuteHanControlResponse" xmlns:q60="http://aidon.com/IEC/AdHoc/v4/EndDeviceControlMessage"/>
+	</wsdl:message>
+	<wsdl:portType name="IIECAdHocReceiveReply">
+		<wsdl:operation name="ReplyCircuitBreakerControl">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCircuitBreakerControlRequest" name="ReplyCircuitBreakerControlRequest" message="tns:ReplyCircuitBreakerControlRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCircuitBreakerControlResponse" name="ReplyCircuitBreakerControlResponse" message="tns:ReplyCircuitBreakerControlResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyRelayControl">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyRelayControlRequest" name="ReplyRelayControlRequest" message="tns:ReplyRelayControlRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyRelayControlResponse" name="ReplyRelayControlResponse" message="tns:ReplyRelayControlResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyGetRelay">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceRelayRequest" name="ReplyEndDeviceRelayRequest" message="tns:ReplyEndDeviceRelayRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceRelayResponse" name="ReplyEndDeviceRelayResponse" message="tns:ReplyEndDeviceRelayResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyContractUpload">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyContractUploadRequest" name="ReplyContractUploadRequest" message="tns:ReplyContractUploadRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyContractUploadResponse" name="ReplyContractUploadResponse" message="tns:ReplyContractUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyConfigurationUpload">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyConfigurationUploadRequest" name="ReplyConfigurationUploadRequest" message="tns:ReplyConfigurationUploadRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyConfigurationUploadResponse" name="ReplyConfigurationUploadResponse" message="tns:ReplyConfigurationUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyManualBillingBreak">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyManualBillingBreakRequest" name="ReplyManualBillingBreakRequest" message="tns:ReplyManualBillingBreakRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyManualBillingBreakResponse" name="ReplyManualBillingBreakResponse" message="tns:ReplyManualBillingBreakResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyProductChange">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyProductChangeRequest" name="ReplyProductChangeRequest" message="tns:ReplyProductChangeRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyProductChangeResponse" name="ReplyProductChangeResponse" message="tns:ReplyProductChangeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEnergySeries">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEnergySeriesRequest" name="ReplyEnergySeriesRequest" message="tns:ReplyEnergySeriesRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEnergySeriesResponse" name="ReplyEnergySeriesResponse" message="tns:ReplyEnergySeriesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyBillingPeriod">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyBillingPeriodRequest" name="ReplyBillingPeriodRequest" message="tns:ReplyBillingPeriodRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyBillingPeriodResponse" name="ReplyBillingPeriodResponse" message="tns:ReplyBillingPeriodResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyMomentaryReadings">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyMomentaryReadingsRequest" name="ReplyMomentaryReadingsRequest" message="tns:ReplyMomentaryReadingsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyMomentaryReadingsResponse" name="ReplyMomentaryReadingsResponse" message="tns:ReplyMomentaryReadingsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyWANCommunicationStatus">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceWANCommunicationStatusRequest" name="ReplyEndDeviceWANCommunicationStatusRequest" message="tns:ReplyEndDeviceWANCommunicationStatusRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceWANCommunicationStatusResponse" name="ReplyEndDeviceWANCommunicationStatusResponse" message="tns:ReplyEndDeviceWANCommunicationStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceEvent">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceEventRequest" name="ReplyEndDeviceEventRequest" message="tns:ReplyEndDeviceEventRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceEventResponse" name="ReplyEndDeviceEventResponse" message="tns:ReplyEndDeviceEventResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceEventHistory">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceEventHistoryRequest" name="ReplyEndDeviceEventHistoryRequest" message="tns:ReplyEndDeviceEventHistoryRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceEventHistoryResponse" name="ReplyEndDeviceEventHistoryResponse" message="tns:ReplyEndDeviceEventHistoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyDipAndSwellLog">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyDipAndSwellLogRequest" name="ReplyDipAndSwellLogRequest" message="tns:ReplyDipAndSwellLogRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyDipAndSwellLogResponse" name="ReplyDipAndSwellLogResponse" message="tns:ReplyDipAndSwellLogResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceCommunicationStatus">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceCommunicationStatusRequest" name="ReplyEndDeviceCommunicationStatusRequest" message="tns:ReplyEndDeviceCommunicationStatusRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceCommunicationStatusResponse" name="ReplyEndDeviceCommunicationStatusResponse" message="tns:ReplyEndDeviceCommunicationStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceTopology">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceTopologyRequest" name="ReplyEndDeviceTopologyRequest" message="tns:ReplyEndDeviceTopologyRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceTopologyResponse" name="ReplyEndDeviceTopologyResponse" message="tns:ReplyEndDeviceTopologyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyPowerOutageLog">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyPowerOutageLogRequest" name="ReplyPowerOutageLogRequest" message="tns:ReplyPowerOutageLogRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyPowerOutageLogResponse" name="ReplyPowerOutageLogResponse" message="tns:ReplyPowerOutageLogResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyVoltageStatistics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageStatisticsRequest" name="ReplyVoltageStatisticsRequest" message="tns:ReplyVoltageStatisticsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageStatisticsResponse" name="ReplyVoltageStatisticsResponse" message="tns:ReplyVoltageStatisticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyCurrentStatistics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCurrentStatisticsRequest" name="ReplyCurrentStatisticsRequest" message="tns:ReplyCurrentStatisticsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCurrentStatisticsResponse" name="ReplyCurrentStatisticsResponse" message="tns:ReplyCurrentStatisticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyHarmonicsAndFrequencyStatistics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyHarmonicsAndFrequencyStatisticsRequest" name="ReplyHarmonicsAndFrequencyStatisticsRequest" message="tns:ReplyHarmonicsAndFrequencyStatisticsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyHarmonicsAndFrequencyStatisticsResponse" name="ReplyHarmonicsAndFrequencyStatisticsResponse" message="tns:ReplyHarmonicsAndFrequencyStatisticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyVoltageRecord">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageRecordRequest" name="ReplyVoltageRecordRequest" message="tns:ReplyVoltageRecordRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageRecordResponse" name="ReplyVoltageRecordResponse" message="tns:ReplyVoltageRecordResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyVoltageHitTableStatistics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageHitTableStatisticsRequest" name="ReplyVoltageHitTableStatisticsRequest" message="tns:ReplyVoltageHitTableStatisticsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageHitTableStatisticsResponse" name="ReplyVoltageHitTableStatisticsResponse" message="tns:ReplyVoltageHitTableStatisticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEarthFaultStatistics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEarthFaultStatisticsRequest" name="ReplyEarthFaultStatisticsRequest" message="tns:ReplyEarthFaultStatisticsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEarthFaultStatisticsResponse" name="ReplyEarthFaultStatisticsResponse" message="tns:ReplyEarthFaultStatisticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplySoftwareFuseControl">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplySoftwareFuseControlRequest" name="ReplySoftwareFuseControlRequest" message="tns:ReplySoftwareFuseControlRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplySoftwareFuseControlResponse" name="ReplySoftwareFuseControlResponse" message="tns:ReplySoftwareFuseControlResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceNANDiagnostics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceNANDiagnosticsRequest" name="ReplyEndDeviceNANDiagnosticsRequest" message="tns:ReplyEndDeviceNANDiagnosticsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceNANDiagnosticsResponse" name="ReplyEndDeviceNANDiagnosticsResponse" message="tns:ReplyEndDeviceNANDiagnosticsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyScheduledEndDeviceControlRequest">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyScheduledEndDeviceControlRequest" name="ReplyScheduledEndDeviceControlRequest" message="tns:ReplyScheduledEndDeviceControlRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyScheduledEndDeviceControlResponse" name="ReplyScheduledEndDeviceControlResponse" message="tns:ReplyScheduledEndDeviceControlResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyScheduledEndDeviceControlDeleted">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyScheduledEndDeviceControlDeletedRequest" name="ReplyScheduledEndDeviceControlDeletedRequest" message="tns:ReplyScheduledEndDeviceControlDeletedRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyScheduledEndDeviceControlDeletedResponse" name="ReplyScheduledEndDeviceControlDeletedResponse" message="tns:ReplyScheduledEndDeviceControlDeletedResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyExtendedHarmonics">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyExtendedHarmonicsRequest" name="ReplyExtendedHarmonicsRequest" message="tns:ReplyExtendedHarmonicsRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyExtendedHarmonicsResponse" name="ReplyExtendedHarmonicsResponse" message="tns:ReplyExtendedHarmonicsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyCommunicationRoleChange">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCommunicationRoleChangeRequest" name="ReplyCommunicationRoleChangeRequest" message="tns:ReplyCommunicationRoleChangeRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCommunicationRoleChangeResponse" name="ReplyCommunicationRoleChangeResponse" message="tns:ReplyCommunicationRoleChangeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyExecuteHanControl">
+			<wsdl:input wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyExecuteHanControlRequest" name="ReplyExecuteHanControlRequest" message="tns:ReplyExecuteHanControlRequest"/>
+			<wsdl:output wsaw:Action="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyExecuteHanControlResponse" name="ReplyExecuteHanControlResponse" message="tns:ReplyExecuteHanControlResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="IECAdHocReceiveReply" type="tns:IIECAdHocReceiveReply">
+		<wsp:PolicyReference URI="#IECAdHocReceiveReply_policy"/>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ReplyCircuitBreakerControl">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCircuitBreakerControlRequest" style="document"/>
+			<wsdl:input name="ReplyCircuitBreakerControlRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyCircuitBreakerControlResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyRelayControl">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyRelayControlRequest" style="document"/>
+			<wsdl:input name="ReplyRelayControlRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyRelayControlResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyGetRelay">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceRelayRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceRelayRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceRelayResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyContractUpload">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyContractUploadRequest" style="document"/>
+			<wsdl:input name="ReplyContractUploadRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyContractUploadResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyConfigurationUpload">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyConfigurationUploadRequest" style="document"/>
+			<wsdl:input name="ReplyConfigurationUploadRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyConfigurationUploadResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyManualBillingBreak">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyManualBillingBreakRequest" style="document"/>
+			<wsdl:input name="ReplyManualBillingBreakRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyManualBillingBreakResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyProductChange">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyProductChangeRequest" style="document"/>
+			<wsdl:input name="ReplyProductChangeRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyProductChangeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEnergySeries">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEnergySeriesRequest" style="document"/>
+			<wsdl:input name="ReplyEnergySeriesRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEnergySeriesResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyBillingPeriod">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyBillingPeriodRequest" style="document"/>
+			<wsdl:input name="ReplyBillingPeriodRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyBillingPeriodResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyMomentaryReadings">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyMomentaryReadingsRequest" style="document"/>
+			<wsdl:input name="ReplyMomentaryReadingsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyMomentaryReadingsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyWANCommunicationStatus">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceWANCommunicationStatusRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceWANCommunicationStatusRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceWANCommunicationStatusResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceEvent">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceEventRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceEventRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceEventResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceEventHistory">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceEventHistoryRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceEventHistoryRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceEventHistoryResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyDipAndSwellLog">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyDipAndSwellLogRequest" style="document"/>
+			<wsdl:input name="ReplyDipAndSwellLogRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyDipAndSwellLogResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceCommunicationStatus">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceCommunicationStatusRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceCommunicationStatusRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceCommunicationStatusResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceTopology">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceTopologyRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceTopologyRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceTopologyResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyPowerOutageLog">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyPowerOutageLogRequest" style="document"/>
+			<wsdl:input name="ReplyPowerOutageLogRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyPowerOutageLogResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyVoltageStatistics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageStatisticsRequest" style="document"/>
+			<wsdl:input name="ReplyVoltageStatisticsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyVoltageStatisticsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyCurrentStatistics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCurrentStatisticsRequest" style="document"/>
+			<wsdl:input name="ReplyCurrentStatisticsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyCurrentStatisticsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyHarmonicsAndFrequencyStatistics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyHarmonicsAndFrequencyStatisticsRequest" style="document"/>
+			<wsdl:input name="ReplyHarmonicsAndFrequencyStatisticsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyHarmonicsAndFrequencyStatisticsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyVoltageRecord">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageRecordRequest" style="document"/>
+			<wsdl:input name="ReplyVoltageRecordRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyVoltageRecordResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyVoltageHitTableStatistics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyVoltageHitTableStatisticsRequest" style="document"/>
+			<wsdl:input name="ReplyVoltageHitTableStatisticsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyVoltageHitTableStatisticsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEarthFaultStatistics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEarthFaultStatisticsRequest" style="document"/>
+			<wsdl:input name="ReplyEarthFaultStatisticsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEarthFaultStatisticsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplySoftwareFuseControl">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplySoftwareFuseControlRequest" style="document"/>
+			<wsdl:input name="ReplySoftwareFuseControlRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplySoftwareFuseControlResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyEndDeviceNANDiagnostics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyEndDeviceNANDiagnosticsRequest" style="document"/>
+			<wsdl:input name="ReplyEndDeviceNANDiagnosticsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyEndDeviceNANDiagnosticsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyScheduledEndDeviceControlRequest">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyScheduledEndDeviceControlRequest" style="document"/>
+			<wsdl:input name="ReplyScheduledEndDeviceControlRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyScheduledEndDeviceControlResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyScheduledEndDeviceControlDeleted">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyScheduledEndDeviceControlDeletedRequest" style="document"/>
+			<wsdl:input name="ReplyScheduledEndDeviceControlDeletedRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyScheduledEndDeviceControlDeletedResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyExtendedHarmonics">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyExtendedHarmonicsRequest" style="document"/>
+			<wsdl:input name="ReplyExtendedHarmonicsRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyExtendedHarmonicsResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyCommunicationRoleChange">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyCommunicationRoleChangeRequest" style="document"/>
+			<wsdl:input name="ReplyCommunicationRoleChangeRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyCommunicationRoleChangeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReplyExecuteHanControl">
+			<soap:operation soapAction="http://aidon.com/IEC/AdHoc/v4/ReceiveReply/IECAdHocReceiveReplyPortType/ReplyExecuteHanControlRequest" style="document"/>
+			<wsdl:input name="ReplyExecuteHanControlRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ReplyExecuteHanControlResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="IECAdHocReceiveReply">
+		<wsdl:port name="IECAdHocReceiveReply" binding="tns:IECAdHocReceiveReply">
+			<soap:address location="https://localhost:50201/IECAdHocTestingSubscriber/IECAdHocTestingSubscriber.svc"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

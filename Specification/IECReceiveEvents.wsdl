@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="IECReceiveEvents" targetNamespace="http://aidon.com/IEC/Event/v2/ReceiveEvents" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://aidon.com/IEC/Event/v2/ReceiveEvents" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Event/v2/ConfigurationEventMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Event/v2/ConfigurationEventMessage">
+      <xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+      <xs:import namespace="http://iec.ch/TC57/2007/ConfigurationEvent#"/>
+      <xs:element name="CreatedConfigurationEventRequest" type="tns:CreatedConfigurationEventRequestMessageType"/>
+      <xs:complexType name="CreatedConfigurationEventRequestMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EventRequestMessageTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:ConfigurationEventPayloadType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EventRequestMessageTypeBase" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigurationEventPayloadType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" ref="q2:ConfigurationEvents" xmlns:q2="http://iec.ch/TC57/2007/ConfigurationEvent#"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CreatedConfigurationEventResponse" type="tns:CreatedConfigurationEventResponseMessageType"/>
+      <xs:complexType name="CreatedConfigurationEventResponseMessageType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2011/schema/message" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2011/schema/message">
+      <xs:complexType name="HeaderType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Verb">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="cancel"/>
+                <xs:enumeration value="canceled"/>
+                <xs:enumeration value="change"/>
+                <xs:enumeration value="changed"/>
+                <xs:enumeration value="create"/>
+                <xs:enumeration value="created"/>
+                <xs:enumeration value="close"/>
+                <xs:enumeration value="closed"/>
+                <xs:enumeration value="delete"/>
+                <xs:enumeration value="deleted"/>
+                <xs:enumeration value="get"/>
+                <xs:enumeration value="reply"/>
+                <xs:enumeration value="execute"/>
+                <xs:enumeration value="executed"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="Noun" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Timestamp" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Source" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="MessageID" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="CorrelationID" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="AccessToken" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="OrganisationID" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="UseGuaranteedDelivery" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReplyType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Result">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="OK"/>
+                <xs:enumeration value="PARTIAL"/>
+                <xs:enumeration value="FAILED"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:ErrorType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="code" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="level">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="INFORM"/>
+                <xs:enumeration value="WARNING"/>
+                <xs:enumeration value="FATAL"/>
+                <xs:enumeration value="CATASTROPHIC"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="reason" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="details" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="stackTrace" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ID">
+            <xs:complexType>
+              <xs:simpleContent>
+                <xs:extension base="xs:string">
+                  <xs:attribute name="objectType" type="xs:string"/>
+                </xs:extension>
+              </xs:simpleContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/ConfigurationEvent#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/ConfigurationEvent#">
+      <xs:import namespace="http://aidon.com/IEC/Event/v2/Common"/>
+      <xs:element name="ConfigurationEvents" type="tns:ArrayOfConfigurationEvent"/>
+      <xs:complexType name="ArrayOfConfigurationEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ConfigurationEvent" type="tns:ConfigurationEvent"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigurationEvent">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="effectiveDateTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="modifiedBy" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="changedEntity" type="q1:identifiedObject" xmlns:q1="http://aidon.com/IEC/Event/v2/Common"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="SequenceNumber" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Event/v2/Common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Event/v2/Common">
+      <xs:complexType name="identifiedObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="mRID" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://aidon.com/IEC/Event/v2/EndDeviceEventMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aidon.com/IEC/Event/v2/EndDeviceEventMessage">
+      <xs:import namespace="http://iec.ch/TC57/2011/schema/message"/>
+      <xs:import namespace="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+      <xs:element name="CreatedEndDeviceEventRequest" type="tns:CreatedEndDeviceEventRequestMessageType"/>
+      <xs:complexType name="CreatedEndDeviceEventRequestMessageType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EventRequestMessageTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Payload" type="tns:EndDeviceEventPayloadType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EventRequestMessageTypeBase" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="q1:HeaderType" xmlns:q1="http://iec.ch/TC57/2011/schema/message"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EndDeviceEventPayloadType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:PayloadTypeBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="EndDeviceEvents" type="q2:ArrayOfEndDeviceEvent" xmlns:q2="http://iec.ch/TC57/2007/EndDeviceEvent#"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="PayloadTypeBase" abstract="true"/>
+      <xs:element name="CreatedEndDeviceEventResponse" type="tns:CreatedEndDeviceEventResponseMessageType"/>
+      <xs:complexType name="CreatedEndDeviceEventResponseMessageType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="q3:HeaderType" xmlns:q3="http://iec.ch/TC57/2011/schema/message"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="Reply" type="q4:ReplyType" xmlns:q4="http://iec.ch/TC57/2011/schema/message"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://iec.ch/TC57/2007/EndDeviceEvent#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iec.ch/TC57/2007/EndDeviceEvent#">
+      <xs:import namespace="http://aidon.com/IEC/Event/v2/Common"/>
+      <xs:complexType name="ArrayOfEndDeviceEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceEvent" type="tns:EndDeviceEvent"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EndDeviceEvent">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="createdDateTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="EndDeviceEventDetails" type="tns:ArrayOfEndDeviceEventDetail"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="EndDeviceEventType" type="tns:EndDeviceEventType"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="MeterReading" type="tns:MeterReading"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="UsagePoint" type="q1:identifiedObject" xmlns:q1="http://aidon.com/IEC/Event/v2/Common"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="EndDevice" type="q2:identifiedObject" xmlns:q2="http://aidon.com/IEC/Event/v2/Common"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfEndDeviceEventDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EndDeviceEventDetail" type="tns:EndDeviceEventDetail"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EndDeviceEventDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EndDeviceEventType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="domain" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="subDomain" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="eventOrAction" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeterReading">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Readings" type="tns:ArrayOfReading"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfReading">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" type="tns:Reading"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Reading">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ReadingType">
+            <xs:complexType>
+              <xs:attribute name="ref" type="xs:string"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="CreatedConfigurationEventRequest">
+    <wsdl:part name="CreatedConfigurationEventRequest" element="q1:CreatedConfigurationEventRequest" xmlns:q1="http://aidon.com/IEC/Event/v2/ConfigurationEventMessage"/>
+  </wsdl:message>
+  <wsdl:message name="CreatedConfigurationEventResponse">
+    <wsdl:part name="CreatedConfigurationEventResponse" element="q2:CreatedConfigurationEventResponse" xmlns:q2="http://aidon.com/IEC/Event/v2/ConfigurationEventMessage"/>
+  </wsdl:message>
+  <wsdl:message name="CreatedEndDeviceEventRequest">
+    <wsdl:part name="CreatedEndDeviceEventRequest" element="q3:CreatedEndDeviceEventRequest" xmlns:q3="http://aidon.com/IEC/Event/v2/EndDeviceEventMessage"/>
+  </wsdl:message>
+  <wsdl:message name="CreatedEndDeviceEventResponse">
+    <wsdl:part name="CreatedEndDeviceEventResponse" element="q4:CreatedEndDeviceEventResponse" xmlns:q4="http://aidon.com/IEC/Event/v2/EndDeviceEventMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="IIECReceiveEvents">
+    <wsdl:operation name="CreatedConfigurationEvent">
+      <wsdl:input wsaw:Action="http://aidon.com/IEC/Event/v2/ReceiveEvents/IECEventReceiveEventsPortType/CreatedConfigurationEventRequest" name="CreatedConfigurationEventRequest" message="tns:CreatedConfigurationEventRequest"/>
+      <wsdl:output wsaw:Action="http://aidon.com/IEC/Event/v2/ReceiveEvents/IECEventReceiveEventsPortType/CreatedConfigurationEventResponse" name="CreatedConfigurationEventResponse" message="tns:CreatedConfigurationEventResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreatedEndDeviceEvent">
+      <wsdl:input wsaw:Action="http://aidon.com/IEC/Event/v2/ReceiveEvents/IECEventReceiveEventsPortType/CreatedEndDeviceEventRequest" name="CreatedEndDeviceEventRequest" message="tns:CreatedEndDeviceEventRequest"/>
+      <wsdl:output wsaw:Action="http://aidon.com/IEC/Event/v2/ReceiveEvents/IECEventReceiveEventsPortType/CreatedEndDeviceEventResponse" name="CreatedEndDeviceEventResponse" message="tns:CreatedEndDeviceEventResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IECReceiveEvents" type="tns:IIECReceiveEvents">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CreatedConfigurationEvent">
+      <soap:operation soapAction="http://aidon.com/IEC/Event/v2/ReceiveEvents/IECEventReceiveEventsPortType/CreatedConfigurationEventRequest" style="document"/>
+      <wsdl:input name="CreatedConfigurationEventRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CreatedConfigurationEventResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatedEndDeviceEvent">
+      <soap:operation soapAction="http://aidon.com/IEC/Event/v2/ReceiveEvents/IECEventReceiveEventsPortType/CreatedEndDeviceEventRequest" style="document"/>
+      <wsdl:input name="CreatedEndDeviceEventRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CreatedEndDeviceEventResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IECReceiveEvents">
+    <wsdl:port name="IECReceiveEvents" binding="tns:IECReceiveEvents">
+      <soap:address location="http://localhost:44505/IECEventTestingSubscriber.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

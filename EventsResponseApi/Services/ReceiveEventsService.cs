@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using EventsResponseApi.Contract;
 using Hafslund.Telemetry;
 using Microsoft.Azure.EventHubs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 
 namespace EventsResponseApi.Services
 {
-    public class ReceiveEventsService: IIECReceiveEvents
+    public class ReceiveEventsService: DefaultContractResolver, IIECReceiveEvents
     {
         private readonly ITelemetryInsightsLogger _telemetry;
         private readonly string source = "hes-events-response-api";
@@ -32,7 +34,7 @@ namespace EventsResponseApi.Services
             try
             {
                 TrackTrace(request.CreatedConfigurationEventRequest1.Header);
-                await SendCreatedEventsToEventHub(createdConfigurationEventResponse);
+                await SendCreatedEventsToEventHub(request);
             }
             catch (Exception ex)
             {
@@ -43,12 +45,28 @@ namespace EventsResponseApi.Services
             return createdConfigurationEventResponse;
         }
 
+        private async Task SendCreatedEventsToEventHub(CreatedConfigurationEventRequest eventObject)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(eventObject);
+                var message = new EventData(Encoding.UTF8.GetBytes(json));
+
+                await _eventHubClient.SendAsync(message);
+            }
+            catch (Exception ex)
+            {
+                _telemetry.TrackException(ex);
+                throw;
+            }
+        }
+
         public async Task<CreatedEndDeviceEventResponse> CreatedEndDeviceEventAsync(CreatedEndDeviceEventRequest request)
         {
             try
             {
                 TrackTrace(request.CreatedEndDeviceEventRequest1.Header);
-                await SendCreatedEventsToEventHub(request.CreatedEndDeviceEventRequest1);
+                await SendCreatedEventsToEventHub(request);
             }
             catch (Exception ex)
             {
@@ -62,12 +80,34 @@ namespace EventsResponseApi.Services
             });
         }
 
-        private async Task SendCreatedEventsToEventHub(object eventObject)
+        private async Task SendCreatedEventsToEventHub(CreatedEndDeviceEventRequest eventObject)
         {
-            var ser = JsonSerializer.Serialize(eventObject, new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } });
-            var message = new EventData(Encoding.UTF8.GetBytes(ser));
+            try
+            {
+                var json = BuildJsonPrivateMembers(eventObject);
+                var message = new EventData(Encoding.UTF8.GetBytes(json));
 
-            await _eventHubClient.SendAsync(message);
+                await _eventHubClient.SendAsync(message);
+            }
+            catch (Exception ex)
+            {
+                _telemetry.TrackException(ex);
+                throw;
+            }
+        }
+
+        private static string BuildJsonPrivateMembers(CreatedEndDeviceEventRequest eventObject)
+        {
+            JsonSerializerSettings jss = new JsonSerializerSettings
+            {
+                ContractResolver = new PrivateContractResolver(),
+                DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+            };
+
+            var payloadjson = JsonConvert.SerializeObject(eventObject.CreatedEndDeviceEventRequest1.Payload, jss);
+            var jsonHeader = JsonConvert.SerializeObject(eventObject.CreatedEndDeviceEventRequest1.Header, jss);
+
+            return "{\"headerField\":" + jsonHeader + ",\"payloadField\": " + payloadjson + "}";
         }
 
         private void TrackTrace(HeaderType header)
@@ -82,18 +122,5 @@ namespace EventsResponseApi.Services
                     {"Verb", header?.Verb.ToString() },
                 });
         }
-
-        private void TrackFinalResponse(HeaderType header, int sentResponses)
-        {
-            // All async communication with Aidon ends with a final response (receipt) that reports the number of async messages sent.
-            // These receipts should not be added to the service bus topic
-            _telemetry.TrackTrace("Final response received", new
-            {
-                CorrelationId = header.CorrelationID,
-                MessageId = header.MessageID,
-                SentResponses = sentResponses
-            });
-        }
-
     }
 }

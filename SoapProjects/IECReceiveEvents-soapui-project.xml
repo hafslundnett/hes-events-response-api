@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:end="http://aidon.com/IEC/Event/v2/EndDeviceEventMessage" xmlns:mes="http://iec.ch/TC57/2011/schema/message" xmlns:end1="http://iec.ch/TC57/2007/EndDeviceEvent#" xmlns:com="http://aidon.com/IEC/Event/v2/Common">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <end:CreatedEndDeviceEventRequest>
+         <!--Optional:-->
+         <end:Header>
+            <mes:Verb>created</mes:Verb>
+            <mes:Noun>EndDeviceEvent</mes:Noun>
+            <mes:Timestamp>2020-03-20T12:15:00Z</mes:Timestamp>
+            <mes:Source>Aidon Linkware</mes:Source>
+            <!--Optional:-->
+            <mes:ReplyAddress>address</mes:ReplyAddress>
+            <mes:MessageID>805931F9-3DF3-4D2C-A743-AF139041E3A1</mes:MessageID>
+            <mes:CorrelationID>804496DD-E2F8-4775-A332-D3DE25B96101</mes:CorrelationID>
+            <!--Optional:-->
+            <mes:AccessToken>123</mes:AccessToken>
+            <!--Optional:-->
+            <mes:OrganisationID>123</mes:OrganisationID>
+            <!--Optional:-->
+            <mes:UseGuaranteedDelivery>false</mes:UseGuaranteedDelivery>
+         </end:Header>
+         <!--Optional:-->
+         <end:Payload>
+            <!--Optional:-->
+            <end:EndDeviceEvents>
+               <!--Zero or more repetitions:-->
+               <end1:EndDeviceEvent>
+                  <end1:createdDateTime>2020-03-20T12:15:00Z</end1:createdDateTime>
+                  <!--Optional:-->
+                  <end1:EndDeviceEventDetails>
+                     <!--Zero or more repetitions:-->
+                     <end1:EndDeviceEventDetail>
+                        <!--Optional:-->
+                       <end1:name>DetectionActive</end1:name>
+                        <!--Optional:-->
+                        <end1:value>true</end1:value>
+                     </end1:EndDeviceEventDetail>
+                  </end1:EndDeviceEventDetails>
+                  <!--Optional:-->
+                  <end1:EndDeviceEventType>
+                      <end1:type>3</end1:type>
+                     <!--Optional:-->
+                     <end1:domain>26</end1:domain>
+                     <!--Optional:-->
+                     <end1:subDomain>126</end1:subDomain>
+                     <!--Optional:-->
+                     <end1:eventOrAction>85</end1:eventOrAction>
+                  </end1:EndDeviceEventType>
+                  <!--Optional:-->
+                  <end1:MeterReading>
+                     <!--Optional:-->
+                     <end1:Readings>
+                        <!--Zero or more repetitions:-->
+                        <end1:Reading>
+                           <!--Optional:-->
+                          <end1:value>231.34</end1:value>
+                           <!--Optional:-->
+                           <end1:ReadingType ref="0.0.6.0.0.4.0.0.64.0.5"/>
+                        </end1:Reading>
+                     </end1:Readings>
+                  </end1:MeterReading>
+                  <!--Optional:-->
+                  <end1:UsagePoint>
+                     <!--Optional:-->
+                      <com:mRID>1234567896666</com:mRID>
+                  </end1:UsagePoint>
+                  <!--Optional:-->
+                  <end1:EndDevice>
+                     <!--Optional:-->
+                     <com:mRID>9876543216666</com:mRID>
+                  </end1:EndDevice>
+               </end1:EndDeviceEvent>
+            </end:EndDeviceEvents>
+         </end:Payload>
+      </end:CreatedEndDeviceEventRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

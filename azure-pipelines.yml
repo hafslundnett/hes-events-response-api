@@ -45,6 +45,7 @@ stages:
         inputs:
           containerregistrytype: 'Container Registry'
           dockerRegistryEndpoint: HafslundNettRegistry
+          useDefaultContext: false
           buildContext: .
           dockerFile: EventsResponseApi/Dockerfile
           imageName: '$(eventsResponseApiImageName)'

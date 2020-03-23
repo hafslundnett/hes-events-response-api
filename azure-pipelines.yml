@@ -1,74 +1,72 @@
-# trunk branch build definition
+# Azure Pipelines configuration
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines
 
 trigger:
 - trunk
 
+pool:
+  vmImage: 'Ubuntu-16.04'
+
 variables:
-  containerRegistry: 'containerregistryprod.azurecr.io'
-  imageName: '$(containerRegistry)/hes-events-response-api:$(Build.BuildNumber)'
+  testProject: 'EventsResponseApi.Tests/*.csproj'
+  containerregistry: 'containerregistryprod.azurecr.io'
+  eventsResponseApiImageName: '$(containerregistry)/hes-events-response-api:$(Build.BuildNumber)'
 
-stages:
-- stage: Build
-  jobs:
-    - job: BuildTest
-      pool:
-        vmImage: 'windows-latest'
-      steps:
-      - task: SonarCloudPrepare@1
-        inputs:
-          SonarCloud: 'sonarcloud'
-          organization: hafslundnett
-          scannerMode: 'MSBuild'
-          projectKey: 'hes-events-response-api'
-          projectName: 'hes-events-response-api'
-      - task: DotNetCoreCLI@2
-        displayName: 'dotnet build'
-        inputs:
-          command: build
-  
-      - task: DotNetCoreCLI@2
-        displayName: 'dotnet test'
-        inputs:
-          command: test
-          projects: EventsResponseApi.Tests/*.csproj
-          arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage"'
-          nobuild: true
-      - task: SonarCloudAnalyze@1
-      - task: SonarCloudPublish@1
-        inputs:
-          pollingTimeoutSec: '300'
+steps:
+# Restore, build and test .NET Core test project
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: restore
+    projects: $(testProject)
 
-    - job: BuildDockerImage
-      pool:
-        vmImage: 'ubuntu-latest'
-      steps:
-      - task: Docker@2
-        displayName: 'Docker build image'
-        inputs:
-          containerRegistry: HafslundNettRegistry
-          repository: 'hes-events-response-api'
-          command: build
-          Dockerfile: '**/Dockerfile'
-          tags: '$(Build.BuildNumber)'
-      - task: Docker@2
-        displayName: 'Login for HafslundNettRegistry'
-        inputs:
-          containerRegistry: HafslundNettRegistry
-          command: login
-      - task: aquasecScanner@4
-        displayName: 'Scan docker image with AquaSec'
-        inputs:
-          image: 'containerregistryprod.azurecr.io/hes-response-response-api:$(Build.BuildNumber)'
-          scanner: 'containerregistryprod.azurecr.io/aquasec/scanner:latest'
-          connection: 'aqua-scanner'
-          policies: Default
-      - task: Docker@2
-        displayName: 'Push docker image'
-        inputs:
-          containerRegistry: HafslundNettRegistry
-          repository: 'hes-events-response-api'
-          command: push
-          tags: '$(Build.BuildNumber)'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: build
+    projects: $(testProject)
+    arguments: '--no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: test
+    projects: $(testProject)
+    arguments: '--no-build --filter Category!=Integration'
+
+# Build Docker containers
+- task: Docker@1
+  displayName: 'Build image hes-events-response-api'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: HafslundNettRegistry
+    useDefaultContext: false
+    buildContext: .
+    dockerFile: EventsResponseApi/Dockerfile
+    imageName: '$(eventsResponseApiImageName)'
+
+- bash: 'sed -i "s/:imagetag/:$(Build.BuildNumber)/" *.yaml'
+  displayName: 'Replace imagetag with build number in k8s deployments'
+  workingDirectory: CI
+
+# Push Docker containers and publish artifacts
+# Should only be done on builds from trunk-branch
+- task: Docker@1
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
+  displayName: 'Push image hes-events-response-api'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: HafslundNettRegistry
+    command: 'Push an image'
+    imageName: '$(eventsResponseApiImageName)'
+
+- task: PublishBuildArtifacts@1
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
+  displayName: 'Publish kubernetes configuration artifacts'
+  inputs:
+    PathtoPublish: CI
+    ArtifactName: CI
 
 - stage: DeployDev
   jobs:
@@ -114,7 +112,7 @@ stages:
             inputs:
               action: createSecret
               kubernetesServiceConnection: 'HafslundNettFunctest'
-              namespace: 'hes-extensions'
+              namespace: hes-extensions
               secretName: containerregistryprodsecret
               dockerRegistryEndpoint: HafslundNettRegistry
           - task: KubernetesManifest@0

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using EventsResponseApi.Contract;
 using Hafslund.Telemetry;
 using Microsoft.Azure.EventHubs;
 using Newtonsoft.Json;
@@ -15,7 +14,7 @@ namespace EventsResponseApi.Services
     {
         private readonly ITelemetryInsightsLogger _telemetry;
         private readonly string source = "hes-events-response-api";
-        private IEventHubService _eventHubService;
+        private readonly IEventHubService _eventHubService;
 
         public ReceiveEventsService(ITelemetryInsightsLogger telemetry, IEventHubService eventHubService)
         {

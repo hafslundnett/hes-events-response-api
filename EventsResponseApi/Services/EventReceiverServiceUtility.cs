@@ -2,7 +2,7 @@
 
 namespace EventsResponseApi.Services
 {
-    public class EventReceiverServiceUtility
+    public static class EventReceiverServiceUtility
     {
         public static HeaderType GetCreatedEventHeaderType(object createdEventRequestMessageType, string source)
         {

@@ -1,19 +1,29 @@
-using System;
+using System.Threading.Tasks;
 using Microsoft.Azure.EventHubs;
 
 namespace EventsResponseApi.Services
 {
-    public class EventHubConfiguration
+    public class EventHubService : IEventHubService
     {
         public EventHubClient HubClient { get; }
 
-        public EventHubConfiguration(string eventhubConnectionString, string eventHubName)
+        public EventHubService(string eventhubConnectionString, string eventHubName)
         {
             var connectionStringBuilder = new EventHubsConnectionStringBuilder(eventhubConnectionString)
             {
                 EntityPath = eventHubName
             };
             HubClient = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
+        }
+
+        public async void Disconnect()
+        {
+            await HubClient.CloseAsync();
+        }
+
+        public Task SendAsync(EventData eventData)
+        {
+            return HubClient.SendAsync(eventData);
         }
     }
 }

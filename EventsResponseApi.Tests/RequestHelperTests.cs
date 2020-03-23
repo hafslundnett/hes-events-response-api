@@ -1,31 +1,25 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using EventsResponseApi.Services;
 using Hafslund.Telemetry;
-using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.Azure.EventHubs;
 using Xunit;
 using Moq;
+using Newtonsoft.Json.Linq;
 
 namespace EventsResponseApi.Tests
 {
-    public class ReceiveEventsServiceTests
+    public class RequestHelperTests
     {
-        private readonly Mock<ITelemetryInsightsLogger> _telemetryMock;
-        private readonly Mock<IEventHubService> _eventHubServiceMock;
+        private Mock<ITelemetryInsightsLogger> _telemetryMock;
 
-        public ReceiveEventsServiceTests()
+        public RequestHelperTests()
         {
             _telemetryMock = new Mock<ITelemetryInsightsLogger>();
-            _eventHubServiceMock = new Mock<IEventHubService>();
         }
 
         [Fact]
-        public async Task CreatedEndDeviceEventRequest_MessageCreated_MessageIsSentAndTraceTracked()
+        public void CreateCreatedEndDeviceEventRequest_BuildEventdata_VerifyPrivateMembersJson()
         {
-            ReceiveEventsService receiveEventsService = new ReceiveEventsService(_telemetryMock.Object, _eventHubServiceMock.Object);
             CreatedEndDeviceEventRequest request = new CreatedEndDeviceEventRequest();
 
             List<EndDeviceEventDetail> listDetails = new List<EndDeviceEventDetail>
@@ -51,7 +45,7 @@ namespace EventsResponseApi.Tests
             {
                 new EndDeviceEvent
                 {
-                    createdDateTime = DateTime.Now,
+                    createdDateTime = DateTime.Parse("2020-03-20T12:15:00Z"),
                     EndDevice = new identifiedObject
                     {
                         mRID = "123456789"
@@ -85,7 +79,7 @@ namespace EventsResponseApi.Tests
                     OrganisationID = "666",
                     Source = "Trouble",
                     ReplyAddress = "Devils land",
-                    Timestamp = DateTime.Now,
+                    Timestamp = DateTime.Parse("2020-03-20T12:15:00Z"),
                     UseGuaranteedDelivery = false,
                     Verb = HeaderTypeVerb.created
                 },
@@ -95,22 +89,56 @@ namespace EventsResponseApi.Tests
                 }
             };
 
-            await receiveEventsService.CreatedEndDeviceEventAsync(request);
+            var json = RequestHelper.BuildJsonPrivateMembers(request);
 
+            var expected = @"{
 
-            var prop = new Dictionary<string, string>
-            {
-                {"CorrelationId", "1234" },
-                {"MessageId", "12345" },
-                {"Noun", "EndDeviceEvent" },
-                {"Source","Trouble" },
-                {"Verb", HeaderTypeVerb.created.ToString() },
-            };
+        ""headerField"": {
+		""verbField"": 5,
+		""nounField"": ""EndDeviceEvent"",
+		""timestampField"": ""\/Date(1584706500000+0100)\/"",
+		""sourceField"": ""Trouble"",
+		""replyAddressField"": ""Devils land"",
+		""messageIDField"": ""12345"",
+		""correlationIDField"": ""1234"",
+		""accessTokenField"": ""123"",
+		""organisationIDField"": ""666"",
+		""useGuaranteedDeliveryFieldSpecified"": false
+	},
+	""payloadField"": {
+		""endDeviceEventsField"": [{
+			""createdDateTimeField"": ""\/Date(1584706500000+0100)\/"",
+			""endDeviceEventDetailsField"": [{
+				""nameField"": ""DetectionActive"",
+				""valueField"": ""true""
+			}],
+			""endDeviceEventTypeField"": {
+				""typeField"": ""3"",
+				""domainField"": ""26"",
+				""subDomainField"": ""126"",
+				""eventOrActionField"": ""85""
+			},
+			""meterReadingField"": {
+				""readingsField"": [{
+					""valueField"": ""231.34"",
+					""readingTypeField"": {
+						""refField"": ""0.0.6.0.0.4.0.0.64.0.5""
+					}
+				}]
+			},
+			""usagePointField"": {
+				""mRIDField"": ""666""
+			},
+			""endDeviceField"": {
+				""mRIDField"": ""123456789""
+			}
+		}]
+	}
+}";
+            JObject xptJson = JObject.Parse(expected);
+            JObject actualJson = JObject.Parse(json);
 
-            var message = new EventData(Encoding.UTF8.GetBytes(RequestHelper.BuildJsonPrivateMembers(request)));
-
-            _telemetryMock.Verify(x => x.TrackTrace("Event received", prop, It.IsAny<bool>(), SeverityLevel.Information));
-            _eventHubServiceMock.Verify(x => x.SendAsync(It.IsAny<EventData>()), Times.Once);
+            Assert.Equal(xptJson, actualJson);
         }
     }
 }

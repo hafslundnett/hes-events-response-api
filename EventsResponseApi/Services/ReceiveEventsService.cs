@@ -15,12 +15,12 @@ namespace EventsResponseApi.Services
     {
         private readonly ITelemetryInsightsLogger _telemetry;
         private readonly string source = "hes-events-response-api";
-        private static EventHubClient _eventHubClient;
+        private IEventHubService _eventHubService;
 
-        public ReceiveEventsService(ITelemetryInsightsLogger telemetry, EventHubConfiguration eventHubConfiguration)
+        public ReceiveEventsService(ITelemetryInsightsLogger telemetry, IEventHubService eventHubService)
         {
             _telemetry = telemetry;
-            _eventHubClient = eventHubConfiguration.HubClient;
+            _eventHubService = eventHubService;
         }
 
         public async Task<CreatedConfigurationEventResponse> CreatedConfigurationEventAsync(CreatedConfigurationEventRequest request)
@@ -52,7 +52,7 @@ namespace EventsResponseApi.Services
                 var json = JsonConvert.SerializeObject(eventObject);
                 var message = new EventData(Encoding.UTF8.GetBytes(json));
 
-                await _eventHubClient.SendAsync(message);
+                await _eventHubService.SendAsync(message);
             }
             catch (Exception ex)
             {
@@ -84,30 +84,16 @@ namespace EventsResponseApi.Services
         {
             try
             {
-                var json = BuildJsonPrivateMembers(eventObject);
+                var json = RequestHelper.BuildJsonPrivateMembers(eventObject);
                 var message = new EventData(Encoding.UTF8.GetBytes(json));
 
-                await _eventHubClient.SendAsync(message);
+                await _eventHubService.SendAsync(message);
             }
             catch (Exception ex)
             {
                 _telemetry.TrackException(ex);
                 throw;
             }
-        }
-
-        private static string BuildJsonPrivateMembers(CreatedEndDeviceEventRequest eventObject)
-        {
-            JsonSerializerSettings jss = new JsonSerializerSettings
-            {
-                ContractResolver = new PrivateContractResolver(),
-                DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
-            };
-
-            var payloadjson = JsonConvert.SerializeObject(eventObject.CreatedEndDeviceEventRequest1.Payload, jss);
-            var jsonHeader = JsonConvert.SerializeObject(eventObject.CreatedEndDeviceEventRequest1.Header, jss);
-
-            return "{\"headerField\":" + jsonHeader + ",\"payloadField\": " + payloadjson + "}";
         }
 
         private void TrackTrace(HeaderType header)

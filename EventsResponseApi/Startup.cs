@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SoapCore;
 
 namespace EventsResponseApi
@@ -31,8 +30,8 @@ namespace EventsResponseApi
             services.AddMvc();
             services.AddSoapExceptionTransformer((ex) => ex.Message);
       
-            services.AddSingleton(s => 
-                    new EventHubConfiguration(
+            services.AddSingleton<IEventHubService, EventHubService>(s => 
+                    new EventHubService(
                         Configuration.EnsureHasValue("ami-timeseries:kv:eventhubnamespaces:ami-timeseries:eventhubs:alarmsandevents:authorizationrules:send:primary_connection_string"),
                         Configuration.EnsureHasValue("EventHub:eventHubName")
                         ));

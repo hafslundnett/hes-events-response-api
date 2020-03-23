@@ -15,65 +15,70 @@ variables:
 
 stages:
 - stage: Build
-steps:
+  jobs:
+    - job: BuildTest
+      steps:
 # Restore, build and test .NET Core test project
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
-  inputs:
-    command: restore
-    projects: $(testProject)
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet restore'
+        inputs:
+          command: restore
+          projects: $(testProject)
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
-  inputs:
-    command: build
-    projects: $(testProject)
-    arguments: '--no-restore'
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet build'
+      inputs:
+          command: build
+          projects: $(testProject)
+          arguments: '--no-restore'
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet test'
-  inputs:
-    command: test
-    projects: $(testProject)
-    arguments: '--no-build --filter Category!=Integration'
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet test'
+        inputs:
+          command: test
+          projects: $(testProject)
+          arguments: '--no-build --filter Category!=Integration'
 
 # Build Docker containers
-- task: Docker@1
-  displayName: 'Build image hes-events-response-api'
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: HafslundNettRegistry
-    useDefaultContext: false
-    buildContext: .
-    dockerFile: EventsResponseApi/Dockerfile
-    imageName: '$(eventsResponseApiImageName)'
+    - job: BuildDockerImage
+      steps:
+      - task: Docker@1
+        displayName: 'Build image hes-events-response-api'
+        inputs:
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: HafslundNettRegistry
+          buildContext: .
+          dockerFile: EventsResponseApi/Dockerfile
+          imageName: '$(eventsResponseApiImageName)'
 
-- bash: 'sed -i "s/:imagetag/:$(Build.BuildNumber)/" *.yaml'
-  displayName: 'Replace imagetag with build number in k8s deployments'
-  workingDirectory: CI
+      - bash: 'sed -i "s/:imagetag/:$(Build.BuildNumber)/" *.yaml'
+        displayName: 'Replace imagetag with build number in k8s deployments'
+        workingDirectory: CI
 
 # Push Docker containers and publish artifacts
 # Should only be done on builds from trunk-branch
-- task: Docker@1
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
-  displayName: 'Push image hes-events-response-api'
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: HafslundNettRegistry
-    command: 'Push an image'
-    imageName: '$(eventsResponseApiImageName)'
+    - job: PushDockerImage
+      steps:
+      - task: Docker@1
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
+        displayName: 'Push image hes-events-response-api'
+        inputs:
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: HafslundNettRegistry
+          command: 'Push an image'
+          imageName: '$(eventsResponseApiImageName)'
 
-- task: PublishBuildArtifacts@1
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
-  displayName: 'Publish kubernetes configuration artifacts'
-  inputs:
-    PathtoPublish: CI
-    ArtifactName: CI
+      - task: PublishBuildArtifacts@1
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
+        displayName: 'Publish kubernetes configuration artifacts'
+        inputs:
+          PathtoPublish: CI
+          ArtifactName: CI
 
 - stage: DeployDev
   jobs:
   - deployment: Deploy
-    displayName: deploy hes-events-response-api
+    displayName: deploy hes-events-response-api to dev
     environment: 'Dev'
     strategy:
       runOnce:
@@ -102,7 +107,7 @@ steps:
 - stage: DeployFuncTest
   jobs:
   - deployment: Deploy
-    displayName: deploy hes-events-response-api
+    displayName: deploy hes-events-response-api to functest
     environment: 'FuncTest'
     strategy:
       runOnce:

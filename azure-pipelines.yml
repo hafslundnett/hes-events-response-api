@@ -17,7 +17,7 @@ stages:
 - stage: Build
   jobs:
     - job: BuildTest
-      steps:
+      steps: 
 # Restore, build and test .NET Core test project
       - task: DotNetCoreCLI@2
         displayName: 'dotnet restore'
@@ -27,7 +27,7 @@ stages:
 
       - task: DotNetCoreCLI@2
         displayName: 'dotnet build'
-      inputs:
+        inputs:
           command: build
           projects: $(testProject)
           arguments: '--no-restore'
@@ -40,8 +40,8 @@ stages:
           arguments: '--no-build --filter Category!=Integration'
 
 # Build Docker containers
-    - job: BuildDockerImage
-      steps:
+      - job: BuildDockerImage
+        steps: 
       - task: Docker@1
         displayName: 'Build image hes-events-response-api'
         inputs:
@@ -56,9 +56,8 @@ stages:
         workingDirectory: CI
 
 # Push Docker containers and publish artifacts
-# Should only be done on builds from trunk-branch
-    - job: PushDockerImage
-      steps:
+      - job: PushDockerImage
+        steps: 
       - task: Docker@1
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
         displayName: 'Push image hes-events-response-api'

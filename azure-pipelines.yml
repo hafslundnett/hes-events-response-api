@@ -30,9 +30,7 @@ stages:
         displayName: 'dotnet test'
         inputs:
           command: test
-          projects: |
-            **/*Tests/*.csproj
-            !**/*IntegrationTests/*.csproj
+          projects: EventsResponseApi.Tests/*.csproj
           arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage"'
           nobuild: true
       - task: SonarCloudAnalyze@1

@@ -40,8 +40,6 @@ stages:
           arguments: '--no-build --filter Category!=Integration'
 
 # Build Docker containers
-      - job: BuildDockerImage
-        steps: 
       - task: Docker@1
         displayName: 'Build image hes-events-response-api'
         inputs:
@@ -56,8 +54,6 @@ stages:
         workingDirectory: CI
 
 # Push Docker containers and publish artifacts
-      - job: PushDockerImage
-        steps: 
       - task: Docker@1
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
         displayName: 'Push image hes-events-response-api'

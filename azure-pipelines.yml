@@ -13,6 +13,8 @@ variables:
   containerregistry: 'containerregistryprod.azurecr.io'
   eventsResponseApiImageName: '$(containerregistry)/hes-events-response-api:$(Build.BuildNumber)'
 
+stages:
+- stage: Build
 steps:
 # Restore, build and test .NET Core test project
 - task: DotNetCoreCLI@2

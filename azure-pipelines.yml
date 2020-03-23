@@ -101,35 +101,6 @@ stages:
               containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'
 
-- stage: DeployTest
-  jobs:
-  - deployment: Deploy
-    displayName: deploy hes-events-response-api
-    environment: 'Test'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-          - task: KubernetesManifest@0
-            displayName: createSecret
-            inputs:
-              action: createSecret
-              kubernetesServiceConnection: 'HafslundNettTest'
-              namespace: 'hes-extensions'
-              secretName: containerregistryprodsecret
-              dockerRegistryEndpoint: HafslundNettRegistry
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'HafslundNettTest'
-              namespace: 'hes-extensions'
-              manifests: |
-                $(System.DefaultWorkingDirectory)/CI/hes-events-response-api.yaml
-                $(System.DefaultWorkingDirectory)/CI/ingress.test.yaml
-              containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
-              imagePullSecrets: 'containerregistryprodsecret'
-
 - stage: DeployFuncTest
   jobs:
   - deployment: Deploy
@@ -156,35 +127,5 @@ stages:
               manifests: |
                 $(System.DefaultWorkingDirectory)/CI/hes-events-response-api.yaml
                 $(System.DefaultWorkingDirectory)/CI/ingress.functest.yaml
-              containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
-              imagePullSecrets: 'containerregistryprodsecret'
-
-
-- stage: DeployProd
-  jobs:
-  - deployment: Deploy
-    displayName: deploy hes-events-response-api
-    environment: 'Prod'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-          - task: KubernetesManifest@0
-            displayName: createSecret
-            inputs:
-              action: createSecret
-              kubernetesServiceConnection: 'HafslundNettProd'
-              namespace: 'hes-extensions'
-              secretName: containerregistryprodsecret
-              dockerRegistryEndpoint: HafslundNettRegistry
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'HafslundNettProd'
-              namespace: 'hes-extensions'
-              manifests: |
-                $(System.DefaultWorkingDirectory)/CI/hes-events-response-api.yaml
-                $(System.DefaultWorkingDirectory)/CI/ingress.prod.yaml
               containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'

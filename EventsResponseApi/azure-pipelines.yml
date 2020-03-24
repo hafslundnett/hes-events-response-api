@@ -71,10 +71,11 @@ stages:
           PathtoPublish: CI
           ArtifactName: CI
 
+
 - stage: DeployDev
   jobs:
   - deployment: Deploy
-    displayName: deploy hes-events-response-api to dev
+    displayName: deploy hes-events-response-api
     environment: 'Dev'
     strategy:
       runOnce:
@@ -103,7 +104,7 @@ stages:
 - stage: DeployFuncTest
   jobs:
   - deployment: Deploy
-    displayName: deploy hes-events-response-api to functest
+    displayName: deploy hes-events-response-api
     environment: 'FuncTest'
     strategy:
       runOnce:
@@ -115,7 +116,7 @@ stages:
             inputs:
               action: createSecret
               kubernetesServiceConnection: 'HafslundNettFunctest'
-              namespace: hes-extensions
+              namespace: 'hes-extensions'
               secretName: containerregistryprodsecret
               dockerRegistryEndpoint: HafslundNettRegistry
           - task: KubernetesManifest@0

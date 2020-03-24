@@ -21,19 +21,19 @@ spec:
       imagePullSecrets:
       - name: containerregistryprodsecret
       containers:
-        - name: hes-events-response-api
-          image: containerregistryprod.azurecr.io/hes-events-response-api:imagetag
-          imagePullPolicy: Always
-          resources:
-              requests:
-                cpu: 100m
-                memory: 125Mi
-              limits:
-                cpu: 200m
-                memory: 256Mi
+      - name: hes-events-response-api
+        image: containerregistryprod.azurecr.io/hes-events-response-api:imagetag
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 125Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
         env:
           - name: EventHub__eventHubName
-            value: alarmsandevents
+            value: "alarmsandevents"
 
 ---
 kind: Service
@@ -46,4 +46,4 @@ spec:
   ports:
   - name: hes-events-response-api
     port: 80
-    
+  

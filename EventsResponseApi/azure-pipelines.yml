@@ -96,8 +96,8 @@ stages:
               kubernetesServiceConnection: 'HafslundNettDev'
               namespace: 'hes-extensions'
               manifests: |
-                $(System.DefaultWorkingDirectory)/CI/hes-events-response-api.yaml
-                $(System.DefaultWorkingDirectory)/CI/ingress.dev.yaml
+               CI/hes-events-response-api.yaml
+               CI/ingress.dev.yaml
               containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'
 
@@ -125,7 +125,7 @@ stages:
               kubernetesServiceConnection: 'HafslundNettFunctest'
               namespace: 'hes-extensions'
               manifests: |
-                $(System.DefaultWorkingDirectory)/CI/hes-events-response-api.yaml
-                $(System.DefaultWorkingDirectory)/CI/ingress.functest.yaml
+                CI/hes-events-response-api.yaml
+                CI/ingress.functest.yaml
               containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'

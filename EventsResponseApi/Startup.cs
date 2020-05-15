@@ -46,7 +46,7 @@ namespace EventsResponseApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.UseSoapEndpoint<IIECReceiveEvents>("/events", new BasicHttpsBinding(), SoapSerializer.XmlSerializer);
+                endpoints.UseSoapEndpoint<IIECReceiveEvents>("/event", new BasicHttpsBinding(), SoapSerializer.XmlSerializer);
             });
         }
     }

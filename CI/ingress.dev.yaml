@@ -9,7 +9,7 @@ spec:
   - host: hesextensionsapi.dev-hafslundnett.io
     http:
       paths:
-      - path: /events
+      - path: /event
         backend:
           serviceName: hes-events-response-api
           servicePort: 80

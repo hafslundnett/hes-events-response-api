@@ -13,7 +13,7 @@ namespace EventsSpontaneousApi.Services
     public class ReceiveEventsService: DefaultContractResolver, IIECReceiveEvents
     {
         private readonly ITelemetryInsightsLogger _telemetry;
-        private readonly string source = "hes-events-response-api";
+        private readonly string source = "hes-events-spontaneous-api";
         private readonly IEventHubService _eventHubService;
 
         public ReceiveEventsService(ITelemetryInsightsLogger telemetry, IEventHubService eventHubService)

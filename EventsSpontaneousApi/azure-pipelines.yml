@@ -75,6 +75,7 @@ stages:
 - stage: DeployDev
   jobs:
   - deployment: Deploy
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
     displayName: deploy hes-events-spontaneous-api
     environment: 'Dev'
     strategy:
@@ -104,6 +105,7 @@ stages:
 - stage: DeployFuncTest
   jobs:
   - deployment: Deploy
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
     displayName: deploy hes-events-spontaneous-api
     environment: 'FuncTest'
     strategy:

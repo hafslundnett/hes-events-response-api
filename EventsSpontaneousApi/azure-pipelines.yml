@@ -9,7 +9,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  testProject: 'EventsSpntaneousApi.Tests/*.csproj'
+  testProject: 'EventsSpontaneousApi.Tests/*.csproj'
   containerregistry: 'containerregistryprod.azurecr.io'
   eventsSpontaneousApiImageName: '$(containerregistry)/hes-events-spontaneous-api:$(Build.BuildNumber)'
 

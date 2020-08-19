@@ -1,5 +1,5 @@
 using System.ServiceModel;
-using EventsResponseApi.Services;
+using EventsSpontaneousApi.Services;
 using Hafslund.Configuration;
 using Hafslund.Telemetry;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SoapCore;
 
-namespace EventsResponseApi
+namespace EventsSpontaneousApi
 {
     public class Startup
     {

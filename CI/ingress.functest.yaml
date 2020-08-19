@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: hes-events-response-api
+  name: hes-events-spontaneous-api
   annotations:
     kubernetes.io/ingress.class: "traefik-internal"
 spec:
@@ -11,5 +11,5 @@ spec:
       paths:
       - path: /event
         backend:
-          serviceName: hes-events-response-api
+          serviceName: hes-events-spontaneous-api
           servicePort: 80

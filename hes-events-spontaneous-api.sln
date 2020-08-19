@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsResponseApi", "EventsResponseApi\EventsResponseApi.csproj", "{2AC95325-05BC-4C46-ADF1-4F5038D91428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsSpontaneousApi", "EventsSpontaneousApi\EventsSpontaneousApi.csproj", "{2AC95325-05BC-4C46-ADF1-4F5038D91428}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2719981-4AF4-4B41-A66C-6E64ECE8F9F9}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Specification\Interface Specification - Linkware IEC 61968 Work Order v1.2 (ID 29581).pdf = Specification\Interface Specification - Linkware IEC 61968 Work Order v1.2 (ID 29581).pdf
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsResponseApi.Tests", "EventsResponseApi.Tests\EventsResponseApi.Tests.csproj", "{25E102D2-420C-4314-88B9-446BA0C7205A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsSpontaneousApi.Tests", "EventsSpontaneousApi.Tests\EventsSpontaneousApi.Tests.csproj", "{25E102D2-420C-4314-88B9-446BA0C7205A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

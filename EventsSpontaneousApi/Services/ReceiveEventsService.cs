@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 
-namespace EventsResponseApi.Services
+namespace EventsSpontaneousApi.Services
 {
     public class ReceiveEventsService: DefaultContractResolver, IIECReceiveEvents
     {

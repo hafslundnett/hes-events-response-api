@@ -5,7 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace EventsResponseApi.Contract
+namespace EventsSpontaneousApi.Contract
 {
     public class PrivateContractResolver : DefaultContractResolver
     {

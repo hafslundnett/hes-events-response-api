@@ -1,7 +1,7 @@
-using EventsResponseApi.Contract;
+using EventsSpontaneousApi.Contract;
 using Newtonsoft.Json;
 
-namespace EventsResponseApi.Services
+namespace EventsSpontaneousApi.Services
 {
     public class RequestHelper
     {

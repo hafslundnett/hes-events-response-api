@@ -1,4 +1,4 @@
-﻿namespace EventsResponseApi.Services
+﻿namespace EventsSpontaneousApi.Services
 {
     public static class ResultCodes
     {

@@ -9,9 +9,9 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  testProject: 'EventsResponseApi.Tests/*.csproj'
+  testProject: 'EventsSpntaneousApi.Tests/*.csproj'
   containerregistry: 'containerregistryprod.azurecr.io'
-  eventsResponseApiImageName: '$(containerregistry)/hes-events-response-api:$(Build.BuildNumber)'
+  eventsSpontaneousApiImageName: '$(containerregistry)/hes-events-spontaneous-api:$(Build.BuildNumber)'
 
 stages:
 - stage: Build
@@ -41,14 +41,14 @@ stages:
 
 # Build Docker containers
       - task: Docker@1
-        displayName: 'Build image hes-events-response-api'
+        displayName: 'Build image hes-events-spontaneous-api'
         inputs:
           containerregistrytype: 'Container Registry'
           dockerRegistryEndpoint: HafslundNettRegistry
           useDefaultContext: false
           buildContext: .
-          dockerFile: EventsResponseApi/Dockerfile
-          imageName: '$(eventsResponseApiImageName)'
+          dockerFile: EventsSpontaneousApi/Dockerfile
+          imageName: '$(eventsSpontaneousApiImageName)'
 
       - bash: 'sed -i "s/:imagetag/:$(Build.BuildNumber)/" *.yaml'
         displayName: 'Replace imagetag with build number in k8s deployments'
@@ -57,12 +57,12 @@ stages:
 # Push Docker containers and publish artifacts
       - task: Docker@1
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
-        displayName: 'Push image hes-events-response-api'
+        displayName: 'Push image hes-events-spontaneous-api'
         inputs:
           containerregistrytype: 'Container Registry'
           dockerRegistryEndpoint: HafslundNettRegistry
           command: 'Push an image'
-          imageName: '$(eventsResponseApiImageName)'
+          imageName: '$(eventsSpontaneousApiImageName)'
 
       - task: PublishBuildArtifacts@1
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
@@ -75,7 +75,7 @@ stages:
 - stage: DeployDev
   jobs:
   - deployment: Deploy
-    displayName: deploy hes-events-response-api
+    displayName: deploy hes-events-spontaneous-api
     environment: 'Dev'
     strategy:
       runOnce:
@@ -96,15 +96,15 @@ stages:
               kubernetesServiceConnection: 'HafslundNettDev'
               namespace: 'hes-extensions'
               manifests: |
-               CI/hes-events-response-api.yaml
+               CI/hes-events-spontaneous-api.yaml
                CI/ingress.dev.yaml
-              containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
+              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'
 
 - stage: DeployFuncTest
   jobs:
   - deployment: Deploy
-    displayName: deploy hes-events-response-api
+    displayName: deploy hes-events-spontaneous-api
     environment: 'FuncTest'
     strategy:
       runOnce:
@@ -125,7 +125,7 @@ stages:
               kubernetesServiceConnection: 'HafslundNettFunctest'
               namespace: 'hes-extensions'
               manifests: |
-                CI/hes-events-response-api.yaml
+                CI/hes-events-spontaneous-api.yaml
                 CI/ingress.functest.yaml
-              containers: 'containerregistryprod.azurecr.io/hes-events-response-api:$(Build.BuildNumber)'
+              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'

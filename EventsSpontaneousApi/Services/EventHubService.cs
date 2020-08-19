@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Azure.EventHubs;
 
-namespace EventsResponseApi.Services
+namespace EventsSpontaneousApi.Services
 {
     public class EventHubService : IEventHubService
     {

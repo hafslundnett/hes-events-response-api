@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "EventsResponseApi": {
+    "EventsSpontaneousApi": {
       "commandName": "Project",
       "launchBrowser": false,
       "applicationUrl": "https://localhost:8444",

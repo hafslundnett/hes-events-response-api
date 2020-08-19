@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventsResponseApi\EventsResponseApi.csproj" />
+    <ProjectReference Include="..\EventsSpontaneousApi\EventsSpontaneousApi.csproj" />
   </ItemGroup>
 
 </Project>

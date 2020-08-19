@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventsResponseApi.Services
+namespace EventsSpontaneousApi.Services
 {
     public static class EventReceiverServiceUtility
     {

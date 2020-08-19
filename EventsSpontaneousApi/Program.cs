@@ -2,7 +2,7 @@ using Hafslund.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace EventsResponseApi
+namespace EventsSpontaneousApi
 {
     public class Program
     {

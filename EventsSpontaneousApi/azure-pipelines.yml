@@ -131,3 +131,33 @@ stages:
                 CI/ingress.functest.yaml
               containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'
+
+- stage: DeployTest
+  jobs:
+  - deployment: Deploy
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
+    displayName: deploy hes-events-spontaneous-api
+    environment: 'Test'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - task: KubernetesManifest@0
+            displayName: createSecret
+            inputs:
+              action: createSecret
+              kubernetesServiceConnection: 'HafslundNettTest'
+              namespace: 'hes-extensions'
+              secretName: containerregistryprodsecret
+              dockerRegistryEndpoint: HafslundNettRegistry
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: 'HafslundNettTest'
+              namespace: 'hes-extensions'
+              manifest: |
+                CI/hes-events-spontaneous-api.yaml
+                CI/ingress.test.yaml
+              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous/api:$(Build.BuildNumber)'
+              imagePullSecrets: 'containerregistryprodsecret'

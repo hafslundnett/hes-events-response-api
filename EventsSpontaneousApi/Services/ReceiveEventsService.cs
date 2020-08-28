@@ -26,7 +26,7 @@ namespace EventsSpontaneousApi.Services
         {
             var createdConfigurationEventResponse = new CreatedConfigurationEventResponse(new CreatedConfigurationEventResponseMessageType
             {
-                Header = EventReceiverServiceUtility.GetCreatedEventHeaderType(request, source),
+                Header = EventReceiverServiceUtility.GetCreatedEventHeaderType(request.CreatedConfigurationEventRequest1, source),
                 Reply = EventReceiverServiceUtility.GetOkReplyType()
             });
 

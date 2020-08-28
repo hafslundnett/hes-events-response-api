@@ -156,8 +156,8 @@ stages:
               action: 'deploy'
               kubernetesServiceConnection: 'HafslundNettTest'
               namespace: 'hes-extensions'
-              manifest: |
+              manifests: |
                 CI/hes-events-spontaneous-api.yaml
                 CI/ingress.test.yaml
-              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous/api:$(Build.BuildNumber)'
+              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'

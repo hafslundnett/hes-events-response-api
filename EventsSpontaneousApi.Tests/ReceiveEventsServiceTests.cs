@@ -8,6 +8,7 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Azure.EventHubs;
 using Xunit;
 using Moq;
+using Newtonsoft.Json;
 
 namespace EventsSpontaneousApi.Tests
 {
@@ -104,7 +105,7 @@ namespace EventsSpontaneousApi.Tests
                 {"MessageId", "12345" },
                 {"Noun", "EndDeviceEvent" },
                 {"Source","Trouble" },
-                {"Verb", HeaderTypeVerb.created.ToString() },
+                {"Verb", HeaderTypeVerb.created.ToString() }
             };
 
             var message = new EventData(Encoding.UTF8.GetBytes(RequestHelper.BuildJsonPrivateMembers(request)));

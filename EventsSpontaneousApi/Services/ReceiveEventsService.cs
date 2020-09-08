@@ -48,7 +48,12 @@ namespace EventsSpontaneousApi.Services
         {
             try
             {
-                var json = JsonConvert.SerializeObject(eventObject);
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+
+                var json = JsonConvert.SerializeObject(eventObject, serializerSettings);
                 var message = new EventData(Encoding.UTF8.GetBytes(json));
 
                 await _eventHubService.SendAsync(message);
@@ -104,7 +109,7 @@ namespace EventsSpontaneousApi.Services
                     {"MessageId", header?.MessageID },
                     {"Noun", header?.Noun },
                     {"Source", header?.Source },
-                    {"Verb", header?.Verb.ToString() },
+                    {"Verb", header?.Verb.ToString() }
                 });
         }
     }

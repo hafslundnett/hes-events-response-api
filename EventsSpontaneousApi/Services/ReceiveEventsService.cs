@@ -32,7 +32,7 @@ namespace EventsSpontaneousApi.Services
 
             try
             {
-                TrackTrace(request.CreatedConfigurationEventRequest1.Header);
+                TrackTrace(request.CreatedConfigurationEventRequest1.Header, request);
                 await SendCreatedEventsToEventHub(request);
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace EventsSpontaneousApi.Services
         {
             try
             {
-                TrackTrace(request.CreatedEndDeviceEventRequest1.Header);
+                TrackTrace(request.CreatedEndDeviceEventRequest1.Header, request);
                 await SendCreatedEventsToEventHub(request);
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace EventsSpontaneousApi.Services
             }
         }
 
-        private void TrackTrace(HeaderType header)
+        private void TrackTrace(HeaderType header, object request)
         {
             _telemetry.TrackTrace("Event received",
                 new Dictionary<string, string>
@@ -105,6 +105,7 @@ namespace EventsSpontaneousApi.Services
                     {"Noun", header?.Noun },
                     {"Source", header?.Source },
                     {"Verb", header?.Verb.ToString() },
+                    { "Request", JsonConvert.SerializeObject(request) }
                 });
         }
     }

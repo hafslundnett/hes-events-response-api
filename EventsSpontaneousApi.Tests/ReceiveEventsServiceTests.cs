@@ -105,8 +105,7 @@ namespace EventsSpontaneousApi.Tests
                 {"MessageId", "12345" },
                 {"Noun", "EndDeviceEvent" },
                 {"Source","Trouble" },
-                {"Verb", HeaderTypeVerb.created.ToString() },
-                { "Request", JsonConvert.SerializeObject(request) }
+                {"Verb", HeaderTypeVerb.created.ToString() }
             };
 
             var message = new EventData(Encoding.UTF8.GetBytes(RequestHelper.BuildJsonPrivateMembers(request)));

@@ -32,7 +32,7 @@ namespace EventsSpontaneousApi.Services
 
             try
             {
-                TrackTrace(request.CreatedConfigurationEventRequest1.Header, request);
+                TrackTrace(request.CreatedConfigurationEventRequest1.Header);
                 await SendCreatedEventsToEventHub(request);
             }
             catch (Exception ex)
@@ -48,7 +48,12 @@ namespace EventsSpontaneousApi.Services
         {
             try
             {
-                var json = JsonConvert.SerializeObject(eventObject);
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+
+                var json = JsonConvert.SerializeObject(eventObject, serializerSettings);
                 var message = new EventData(Encoding.UTF8.GetBytes(json));
 
                 await _eventHubService.SendAsync(message);
@@ -64,7 +69,7 @@ namespace EventsSpontaneousApi.Services
         {
             try
             {
-                TrackTrace(request.CreatedEndDeviceEventRequest1.Header, request);
+                TrackTrace(request.CreatedEndDeviceEventRequest1.Header);
                 await SendCreatedEventsToEventHub(request);
             }
             catch (Exception ex)
@@ -95,7 +100,7 @@ namespace EventsSpontaneousApi.Services
             }
         }
 
-        private void TrackTrace(HeaderType header, object request)
+        private void TrackTrace(HeaderType header)
         {
             _telemetry.TrackTrace("Event received",
                 new Dictionary<string, string>
@@ -104,8 +109,7 @@ namespace EventsSpontaneousApi.Services
                     {"MessageId", header?.MessageID },
                     {"Noun", header?.Noun },
                     {"Source", header?.Source },
-                    {"Verb", header?.Verb.ToString() },
-                    { "Request", JsonConvert.SerializeObject(request) }
+                    {"Verb", header?.Verb.ToString() }
                 });
         }
     }

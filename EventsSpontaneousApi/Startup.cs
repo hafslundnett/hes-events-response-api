@@ -32,7 +32,7 @@ namespace EventsSpontaneousApi
       
             services.AddSingleton<IEventHubService, EventHubService>(s => 
                     new EventHubService(
-                        Configuration.EnsureHasValue("ami-timeseries:kv:eventhubnamespaces:ami-timeseries:eventhubs:alarmsandevents:authorizationrules:send:primary_connection_string"),
+                        Configuration.EnsureHasValue("ami-timeseries:kv:eventhubnamespaces:ami-timeseries:eventhubs:alarmsandevents:authorizationrules:elvia-send:primary_connection_string"),
                         Configuration.EnsureHasValue("EventHub:eventHubName")
                         ));
 

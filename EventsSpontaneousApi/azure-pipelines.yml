@@ -102,35 +102,35 @@ stages:
               containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
               imagePullSecrets: 'containerregistryprodsecret'
 
-- stage: DeployFuncTest
-  jobs:
-  - deployment: Deploy
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
-    displayName: deploy hes-events-spontaneous-api
-    environment: 'FuncTest'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-          - task: KubernetesManifest@0
-            displayName: createSecret
-            inputs:
-              action: createSecret
-              kubernetesServiceConnection: 'HafslundNettFunctest'
-              namespace: 'hes-extensions'
-              secretName: containerregistryprodsecret
-              dockerRegistryEndpoint: HafslundNettRegistry
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'HafslundNettFunctest'
-              namespace: 'hes-extensions'
-              manifests: |
-                CI/hes-events-spontaneous-api.yaml
-                CI/ingress.functest.yaml
-              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
-              imagePullSecrets: 'containerregistryprodsecret'
+#- stage: DeployFuncTest
+#  jobs:
+#  - deployment: Deploy
+#    condition: eq(variables['Build.SourceBranch'], 'refs/heads/trunk')
+#    displayName: deploy hes-events-spontaneous-api
+#    environment: 'FuncTest'
+#    strategy:
+#      runOnce:
+#        deploy:
+#          steps:
+#          - checkout: self
+#          - task: KubernetesManifest@0
+#            displayName: createSecret
+#            inputs:
+#              action: createSecret
+#              kubernetesServiceConnection: 'HafslundNettFunctest'
+#              namespace: 'hes-extensions'
+#              secretName: containerregistryprodsecret
+#              dockerRegistryEndpoint: HafslundNettRegistry
+#          - task: KubernetesManifest@0
+#            inputs:
+#              action: 'deploy'
+#              kubernetesServiceConnection: 'HafslundNettFunctest'
+#              namespace: 'hes-extensions'
+#              manifests: |
+#                CI/hes-events-spontaneous-api.yaml
+#                CI/ingress.functest.yaml
+#              containers: 'containerregistryprod.azurecr.io/hes-events-spontaneous-api:$(Build.BuildNumber)'
+#              imagePullSecrets: 'containerregistryprodsecret'
 
 - stage: DeployTest
   jobs:

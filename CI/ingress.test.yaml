@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: hesextensionsapi-internal.test-hafslundnett.io
+  - host: hesextensionsapi.test-hafslundnett.io
     http:
       paths:
       - path: /event
